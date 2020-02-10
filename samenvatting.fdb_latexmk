@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1581343573 "samenvatting.tex" "/home/zjeffer/Documents/school/sensors-interfacing/samenvatting.pdf" "samenvatting" 1581343574
-  "/home/zjeffer/Documents/school/sensors-interfacing/samenvatting.aux" 1581343574 1376 b7fa2f11a5b93b6a73f7dde4cbf1f32b ""
+["pdflatex"] 1581345249 "samenvatting.tex" "/home/zjeffer/Documents/school/sensors-interfacing/samenvatting.pdf" "samenvatting" 1581345250
+  "/home/zjeffer/Documents/school/sensors-interfacing/samenvatting.aux" 1581345250 1376 b7fa2f11a5b93b6a73f7dde4cbf1f32b ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1572595918 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1572595918 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1572595918 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -54,13 +54,13 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1580501786 4572998 f9631eebba48c3ee98e5d310044b0a09 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1580501780 8044939 f4559178db85ecdb8cfa1c19e2bec9c8 ""
   "img/Screenshot_20200210_120010.png" 1581332414 152572 124c86327899de7b5b28399b13969791 ""
-  "samenvatting.aux" 1581343574 1376 b7fa2f11a5b93b6a73f7dde4cbf1f32b "pdflatex"
-  "samenvatting.tex" 1581343573 2599 9fb2677dd92b3bde5452a1da5ce3610c ""
-  "samenvatting.toc" 1581343574 851 195b5e4e20e4e21becbc70b0005beb48 "pdflatex"
+  "samenvatting.aux" 1581345250 1376 b7fa2f11a5b93b6a73f7dde4cbf1f32b "pdflatex"
+  "samenvatting.tex" 1581345249 2599 9fb2677dd92b3bde5452a1da5ce3610c ""
+  "samenvatting.toc" 1581345250 851 195b5e4e20e4e21becbc70b0005beb48 "pdflatex"
   (generated)
   "/home/zjeffer/Documents/school/sensors-interfacing/samenvatting.log"
-  "samenvatting.toc"
   "samenvatting.pdf"
   "/home/zjeffer/Documents/school/sensors-interfacing/samenvatting.pdf"
-  "samenvatting.aux"
   "samenvatting.log"
+  "samenvatting.toc"
+  "samenvatting.aux"
