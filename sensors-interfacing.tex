@@ -3,6 +3,10 @@
 \usepackage[dutch]{babel}
 \usepackage[margin=3cm]{geometry}
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{hyperref}
+
 
 \graphicspath{
     {img/}
@@ -247,6 +251,231 @@ Aan/uit
 
 \subsection{Weergave digitale signalen}
 \includegraphics[width=1\textwidth]{Screenshot_20200217_125726.png}
+
+\section{AD/DA conversie}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_115204.png}
+    \caption{Analoog naar digitaal (AD converter)}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_115212.png}
+    \caption{Digitaal naar analoog (DA converter)}
+\end{figure}
+
+\subsection{Analoog naar digitaal}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_115430.jpg}
+    \caption{}
+\end{figure}
+
+\begin{itemize}
+    \item Range = verschil tussen laagste en hoogste waarde
+    \item Resolutie = aantal stappen of stapgrootte in bits
+    \item Belangrijk gevolg:
+    \begin{itemize}
+        \item beide parameters bepalen de exactheid en de afwijkingen
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Voorbeeld A}
+\begin{itemize}
+    \item Range = 2V - 2.5V
+    \item Resolutie = 8bits
+    \item Dus aantal discrete stappen = $2^8 = 256 \Rightarrow 256 - 1 = 255$
+    \item Stapgrootte (LSB) = $\frac{range}{255} = \frac{2.5V - 2V}{255} = \frac{0.5V}{255} = 0.00196..V / stap$
+    \item ofwel $\approx$ $2mV$/stap
+\end{itemize}
+
+
+\subsubsection{Voorbeeld B}
+\begin{itemize}
+    \item Range = 0V - 12V
+    \item Resolutie = 12bits
+    \item Dus aantal discrete stappen = $2^{12} = 4096 \Rightarrow 4096 - 1 = 4095$
+    \item Stapgrootte (LSB) = $\frac{range}{4095} = \frac{12V - 0V}{4095} = \frac{12V}{4095} = 0.0029304..V / stap$
+    \item ofwel $\approx$ $3mV$/stap
+\end{itemize}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_120800.jpg}
+    \caption{AD conversie}
+\end{figure}
+
+\begin{itemize}
+    \item Quantisatiefouten
+    \item Verzoorzaakt quantisatieruis
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_120900.jpg}
+    \caption{AD conversie}
+\end{figure}
+
+\begin{itemize}
+    \item Quantisatiefouten $\rightarrow$ dithering
+    \item = \underline{vooraf} (witte) ruis toevoegen aan signaal
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_121151.png}
+    \caption{Dithering}
+\end{figure}
+
+\subsubsection{Sample Rate / sample frequentie}
+= aantal conversies per seconde
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_121653.png}
+    \caption{Sample rate}
+\end{figure}
+
+\begin{itemize}
+    \item Nyquist $\rightarrow$ Minimale sample rate = 2x de frequentie van het signaal
+    \item Voorbeelden:
+    \begin{itemize}
+        \item HiFi Audio CD: 44.1kHz sample rate
+        \item Oude telefoontoestellen: 8kHz sample rate
+        \item HD-DVD Audio: 192kHz
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_121935.png}
+    \caption{Minimale sample rate}
+\end{figure}
+
+\subsubsection{Aliasing}
+= HF signaal als LF 'spooksignaal' detecteren 
+\begin{itemize}
+    \item Treedt op bij onvoldoende hoge sample rate
+    \item Anti-Aliasing filter (low-pass filter) beperkt signaal onder nyquist frequentie
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_122204.png}
+    \caption{Anti-aliasing filter}
+\end{figure}
+
+\subsubsection{Oversampling}
+\begin{itemize}
+    \item Sampelen met veelvoud van nyquist frequentie
+    \item Kan worden gebruikt om de resolutie op te voeren
+    \item Kan worden gebruikt om digitaal (DSP) te filteren
+    \item Verhoogt het effectieve aantal bits van de ADC
+    \begin{itemize}
+        \item \underline{Voorbeeld:} 20bit ADC met 256x OS = 24bit effectieve resolutie
+    \end{itemize}
+    \item Undersampling $\rightarrow$ specifiek gebruik bij mixers
+\end{itemize}
+
+\subsubsection{Implementatie en types}
+\begin{itemize}
+    \item De comparator
+    \item Bekeken als 1-bit ADC
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_122504.png}
+    \caption{Comparator}
+\end{figure}
+
+\subsubsection{Flash ADC}
+\begin{itemize}
+    \item Comparator per 'level'
+    \item Zeer snel = directe omzetting
+    \item Complex \& High power
+    \item Lagere resoluties
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_122635.png}
+    \caption{Flash ADC}
+\end{figure}
+
+\subsubsection{Successive approximation ADC}
+\begin{itemize}
+    \item Gebruikt 1 comparator
+    \item Vergelijkt een opgewekte spanning met het signaal
+    \item Hoge resolutie mogelijk
+    \item Trager
+    \item Relatief goedkoop
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_122846.png}
+    \caption{Successive approximation ADC}
+\end{figure}
+
+\subsection{Digitaal naar analoog conversie}
+\begin{itemize}
+    \item Omzetten digitale naar analoge waarde
+    \item Range
+    \item Resolutie
+    \item Samplefrequentie
+\end{itemize}
+
+\subsubsection{Simpele DAC}
+\begin{itemize}
+    \item Binair $\rightarrow$ analoge waarde
+    \item \underline{Voorbeeld} weerstandsnetwerk
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_123043.png}
+    \caption{Weerstandsnetwerk}
+\end{figure}
+
+\subsubsection{Simpele DAC adhv PWM}
+\begin{itemize}
+    \item PWM == digitaal signaal
+    \item Door variatie van duty-cycle kan de gemiddelde waarde worden gevarieerd
+    \item Door filteren kan de blokgolf worden omgezet in een variabele analoge waarde 
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_123240.png}
+    \caption{DAC met PWM}
+\end{figure}
+
+\subsubsection{Andere types}
+\begin{itemize}
+    \item $\Sigma\Delta$
+    \item $I^2S$ DAC
+    \item Nog zeer veel andere overwegingen:
+    \begin{itemize}
+        \item THD (Harmonische vervorming)
+        \item Faseruis
+        \item \dots
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Nalezen:}
+\begin{itemize}
+    \item \url{https://en.wikipedia.org/wiki/Digital-to-analog_converter}
+    \item \url{https://en.wikipedia.org/wiki/Analog-to-digital_converter}
+    \item \url{https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem}
+    \item \url{https://en.wikipedia.org/wiki/Nyquist_rate}
+    \item \url{https://en.wikipedia.org/wiki/Pulse-width_modulation}
+    \item \url{https://en.wikipedia.org/wiki/Delta-sigma_modulation}
+\end{itemize}
+
 
 
 \end{document}
