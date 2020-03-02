@@ -476,6 +476,303 @@ Aan/uit
     \item \url{https://en.wikipedia.org/wiki/Delta-sigma_modulation}
 \end{itemize}
 
+\section{Modulatie}
+\begin{itemize}
+    \item Informatie toevoegen aan een draaggolf
+    \item Door de variatie van minstens een van de eigenschappen van deze draaggolf
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Screenshot_20200302_115326.png}
+    \caption{Modulatie}
+\end{figure}
+
+\subsection{Demodulatie}
+= Het terugwinnen van de informatie uit de gemoduleerde draaggolf
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Screenshot_20200302_115359.png}
+    \caption{Demodulatie}
+\end{figure}
+
+\subsection{Modem}
+= \bold{Mo}dulator + \bold{Dem}odulator
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_115504.png}
+    \caption{Modem}
+\end{figure}
+
+\subsection{Waarom?}
+
+\begin{itemize}
+    \item Interconnectie van IoT devices
+    \item Vaak draadloos
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_115646.png}
+    \caption{}
+\end{figure}
+
+\subsection{Hoe?}
+\begin{itemize}
+    \item Draaggolf of carrier
+    \item Signaal met een zekere (hogere) frequentie
+\end{itemize}
+
+\subsection{Draaggolf}
+= carrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_115827.png}
+    \caption{Draaggolf}
+\end{figure}
+
+\begin{itemize}
+    \item Amplitude
+    \item Frequentie / Periode
+\end{itemize}
+
+\subsection{Simpel}
+\begin{itemize}
+    \item Aan/uit schakelen van de draaggolf
+    \item CW = continuous wave
+    \item Bv: Morse code
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200302_120000.png}
+    \caption{Morse code}
+\end{figure}
+
+\subsection{Amplitude modulatie (=AM)}
+\begin{itemize}
+    \item Aanpassen van de amplitude v/d draaggolf
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200302_120121.png}
+    \caption{Amplitudemodulatie (1)}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200302_120147.png}
+    \caption{Amplitudemodulatie (2)}
+\end{figure}
+
+\begin{itemize}
+    \item Radio LW/MW/SW AM
+    \item Typisch gebruikt op 'lagere' HF banden: 100kHz - 60MHz
+\end{itemize}
+
+\subsubsection{Overmodulatie}
+\begin{itemize}
+    \item Modulatiediepte (modulatie index)
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200302_120354.png}
+    \caption{Overmodulatie}
+\end{figure}
+
+\subsection{AM bandbreedte}
+\begin{itemize}
+    \item Bandbreedte van een AM signaal:
+    \begin{itemize}
+        \item Centerfrequentie = draaggolffrequentie
+        \item 2x frequentie van gemoduleerd signaal in totaal
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200302_120508.png}
+    \caption{}
+\end{figure}
+
+\subsection{SSB modulatie (USB/LSB)}
+\begin{itemize}
+    \item Alle informatie zit in elke sideband (zijband) bij AM
+    \item Carrier + een sideband wegfilteren = reductie van de bandbreedte
+    \item Efficienter gebruik van het spectrum
+    \item Moeilijk om goed te demoduleren
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_120812.png}
+    \caption{}
+\end{figure}
+
+\subsection{ASK Modulatie}
+\begin{itemize}
+    \item Amplitude shift keying
+    \item Vorm van AM-modulatie voor digitale signalen
+    \item Mogelijk met meerdere signaalniveaus
+    \item 4-level ASK
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_121007.png}
+    \caption{ASK}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_121031.png}
+    \caption{4 level ASK}
+\end{figure}
+
+\subsection{Frequentie modulatie}
+\begin{itemize}
+    \item Variatie in de frequentie van de draaggolf
+    \item FM radio 88MHz - 108MHz
+    \item VHF Maritieme radio
+    \item UHF PMR Radios
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_121335.png}
+    \caption{Frequentiemodulatie}
+\end{figure}
+
+\subsection{FSK modulatie}
+\begin{itemize}
+    \item Frequency Shift Keying
+    \item Vorm van FM
+    \item Wisselen tussen 2 of meer frequenties
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_121458.png}
+    \caption{FSK}
+\end{figure}
+
+\subsection{FM Modulatie}
+\begin{itemize}
+    \item Carrier is altijd op 100\% amplitude aanwezig tijdens transmissie
+    \item Minder ruis, betere kwaliteit voor audio dan AM
+    \item Hogere bandbreedte $\Rightarrow$ Meer stroomverbruik
+    \item WFM (Wide FM), NFM (Narrow FM), FM
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_121650.png}
+    \caption{Bandbreedte FM - NFM - WFM}
+\end{figure}
+
+\subsection{Fase modulatie}
+\begin{itemize}
+    \item Faseverschuiving van een signaal
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_121855.png}
+    \caption{Faseverschuiving}
+\end{figure}
+
+\subsection{PSK modulatie}
+\begin{itemize}
+    \item Phase shift keying
+    \item Bij wisselen van bit $\Rightarrow$ fase omkeren
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_122031.png}
+    \caption{Fasemodulatie}
+\end{figure}
+
+\subsection{Phase Shift Modulatie}
+\begin{itemize}
+    \item BPSK $\Rightarrow$ Binary PSK = 2 fase
+    \item QPSK $\Rightarrow$ Quadrature PSK = 4 fase
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_122452.png}
+    \caption{}
+\end{figure}
+
+\subsection{QAM modulatie}
+\begin{itemize}
+    \item Quadrature amplitude modulatie
+    \item Informatie zit \dots
+    \begin{itemize}
+        \item de amplitude (zoals bij ASK)
+        \item de fase (zoals bij PSK)
+    \end{itemize}
+    \item Meerdere symbolen
+    \begin{itemize}
+        \item 4-QAM
+        \item 16-QAM
+        \item 64-QAM
+        \item \dots
+    \end{itemize}
+    \item DAB+ $\Rightarrow$ 4/16/64 - QAM
+    \item Hogere transmissiesnelheid
+    \item Gevoeliger voor fouten
+\end{itemize}
+
+\subsection{Bandbreedte / vermogen}
+\begin{itemize}
+    \item Meer bandbreedte = hogere snelheid
+    \item Meer bandbreedte = hoger vermogen nodig
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_122703.png}
+    \caption{}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_123030.png}
+    \caption{}
+\end{figure}
+
+\subsection{Waarom Narrow-band}
+\begin{itemize}
+    \item Oppervlakte van het signaal = Power
+    \item Bij smalbandige signalen $\Rightarrow$ betere SNR (signaal-naar-ruis) verhouding bij hetzelfde vermogen
+    \item Om met een klein vermogen heel grote afstanden overbruggen
+    \item Zeer traag
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_123310.png}
+    \caption{Waarom Narrow-band: narrow-band kan makkelijker boven ruisniveau}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200302_122906.png}
+    \caption{Voorbeeld: NB-IoT}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Screenshot_20200302_122954.png}
+    \caption{Voorbeeld: Telefoonmodem (\url{https://www.youtube.com/watch?v=ckc6XSSh52w})}
+\end{figure}
 
 
 \end{document}
