@@ -6,6 +6,7 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{hyperref}
+\usepackage{amsmath}
 
 
 \graphicspath{
@@ -774,5 +775,421 @@ Aan/uit
     \caption{Voorbeeld: Telefoonmodem (\url{https://www.youtube.com/watch?v=ckc6XSSh52w})}
 \end{figure}
 
+\section{RF-spectrum}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Screenshot_20200309_115132.png}
+    \caption{Radiogolven op het spectrum}
+\end{figure}
+
+\subsection{Beschikbare bandbreedte}
+\begin{itemize}
+    \item In de hogere frequentiebanden is meer bandbreedte beschikbaar
+    \item Voorbeeld:
+    \begin{itemize}
+        \item 2.4GHz WiFi: 20MHz bandbreedte
+        \item 5GHZ 802.11ac WiFi: 80MHz bandbreedte
+        \item 1 WiFi kanaal > volledige AM-radio LW + MW + SW band
+    \end{itemize}
+    \item Meer bandbreedte = mogelijk hogere datarates
+\end{itemize}
+
+\subsection{Licenties en licentievrije banden}
+\begin{itemize}
+    \item Beheer van het spectrum 
+    \item In Belgie door het BIPT
+    \item In de VS door het FCC
+    \item Harmonisatie in Europa / VS / Azië
+    \item url{https://www.bipt.be/nl/operatoren/radio/frequentiebeheer/frequentieplan/tabel}
+\end{itemize}
+
+\subsection{ISM banden}
+\begin{itemize}
+    \item = Industrial / Scientific / Medical - Band
+    \item Hoeft geen vergunning voor gebruik
+    \item Is aan strikte voorwaarden verbonden
+    \begin{itemize}
+        \item Maximaal vermogen
+        \item Maximale transimissietijd
+        \item Maximale periodiciteit van transmissies
+        \item Maximale bandbreedte
+        \item \dots
+    \end{itemize}
+    \item Specifieke banden zijn hiervoor vrijgegeven
+\end{itemize}
+
+\subsection{Interferentie}
+
+\subsubsection{Co-channel interferentie}
+Wat als meerdere systemen dezelfde band gebruiken?
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Screenshot_20200309_115759.png}
+    \caption{Co-channel Interferentie}
+\end{figure}
+
+\subsubsection{Signaalseparatie}
+
+\begin{itemize}
+    \item Minimaal verschil is afhankelijk van modulatietype
+    \item Voorbeeld:
+    \begin{itemize}
+        \item BPSK $>$ 10dB
+        \item 256-QAM $>$ 40dB
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200309_120012.png}
+    \caption{Signaalseparatie}
+\end{figure}
+
+\subsubsection{Interferentie van naburige kanalen}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Screenshot_20200309_120313.png}
+    \caption{Interferentie van naburige kanalen}
+\end{figure}
+
+\subsubsection{Interferentie van andere toestellen}
+\begin{itemize}
+    \item Ruis / atmosferische storingen
+    \item SNR $\Rightarrow$ Signaal / Ruis verhouding
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Screenshot_20200309_120624.png}
+    \caption{Interferentie van andere toestellen}
+\end{figure}
+
+\subsection{Meten van interferentie}
+\begin{itemize}
+    \item Meten van WiFi kanalen kan met software 
+    \item Software is niet in staat niet-WiFi signalen te meten
+    \item Kan worden gemeten met een spectrum analyzer
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200309_120748.png}
+    \caption{Meten van interferentie}
+\end{figure}
+
+\subsection{Golflengte}
+\begin{itemize}
+    \item Golflengte in meter is een andere wijze om de frequentie weer te geven
+    \item Relevant bij antennes en transmissielijnen
+    \item $\lambda = \frac{c}{f}$
+    \item $c=$ lichtsnelheid = $299\ 792\ 458 \text{ m/s}$ 
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200309_121003.png}
+    \caption{Golflengte}
+\end{figure}
+
+\subsubsection{Rekenvoorbeeld}
+\begin{itemize}
+    \item Frequentie van $102.1MHz$
+    \item $\lambda = \frac{299\ 792\ 458 \text{ m/s}}{102.1\text{ MHz}} = 2.936\dots \text{ m}$
+    \item "De 70 cm band":
+    \begin{itemize}
+        \item $f = \frac{(299\ 792\ 458)}{\lambda} = \frac{(299\ 792\ 458)}{0.7\ \text{m}} =  428\ 274\ 940\ \text{Hz} = 430\ \text{MHz}$
+    \end{itemize}
+\end{itemize}
+
+\subsection{Antennesysteem}
+\begin{itemize}
+    \item Een antenne stuurt / ontvangt zoveel mogelijk van de RF-energie op de gewenste frequentie
+    \item $\Rightarrow$ resonantie van het antennesysteem op de gewenste frequentie
+    \item Formaat van de antenne is vaak beperkende factor 
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Screenshot_20200309_122045.png}
+    \caption{}
+\end{figure}
+
+\subsubsection{De dipool antenne}
+\begin{itemize}
+    \item Zeer eenvoudig
+    \item $\frac12 \lambda$ groot
+    \item Vaak toegepast
+    \item Kan worden 'opgeplooid'
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200309_122306.png}
+    \caption{Dipool antenne}
+\end{figure}
+
+\subsubsection{Polarisatie van antennes}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Screenshot_20200309_122403.png}
+    \caption{Polarisatie van antennes}
+\end{figure}
+
+\subsubsection{Directionaliteit van antennes}
+\begin{itemize}
+    \item Omnidirectionele antenne
+    \begin{itemize}
+        \item Meestal dipolen of end-fed (=stukje draad)
+        \item Discone
+    \end{itemize}
+    \item Directionele antenne
+    \begin{itemize}
+        \item Schotelantenne
+        \item Yagi
+        \item Patch
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Screenshot_20200309_122609.png}
+    \caption{Directionaliteit van antennes}
+\end{figure}
+
+\subsubsection{Stralingspatroon van antennes}
+\begin{itemize}
+    \item Gevoeligheid van antennes is niet overal hetzelfde
+    \item Zeer afhankelijk van constructie en type antenne
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Screenshot_20200309_122734.png}
+    \caption{Stralingspatroon van antennes}
+\end{figure}
+
+\subsubsection{Gain van een antenne}
+\begin{itemize}
+    \item Gain = versterking
+    \item Uitgedrukt in dB
+    \item Nooit 'magisch', er is altijd een trade-off
+    \begin{itemize}
+        \item Directionaliteit
+        \item Bandbreedte
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Screenshot_20200309_122914.png}
+    \caption{Gain van een antenne}
+\end{figure}
+
+\subsubsection{Propagatie van RF-signalen}
+\begin{itemize}
+    \item Absorptie
+    \item Reflectie
+    \item Scattering
+    \item Refractie
+    \item Path loss
+    \item \dots
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Screenshot_20200309_123000.png}
+    \caption{Propagatie van RF-signalen}
+\end{figure}
+
+\subsubsection{Path loss}
+\begin{itemize}
+    \item Verzwakking van het signaal met afstand zonder obstakels $\Rightarrow$ free space path loss
+    \item \bold{Oorzaak} uitdeinen van het signaal
+    \item Verzwakking is exponentieel met de afstand
+    \item Enkel afhankelijk van frequentie en afstand
+    \item Hogere frequenties hebben hoger path loss
+\end{itemize}
+
+FSPL (dB) $= 20\cdot log_{10}(d) + 20\cdot log_{10}(f) + 32.44$
+\begin{itemize}
+    \item d = afstand in km
+    \item f = frequentie in MHz
+\end{itemize}
+
+\subsubsection{Signaalverzwakking / path loss}
+\begin{itemize}
+    \item Meer verzwakking bij hogere frequenties
+    \item Minder bandbreedte bij lagere frequenties
+    \item Wat is beter?
+    \begin{itemize}
+        \item 2.4GHz WiFi
+        \item 5GHz WiFi
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200309_123426.png}
+    \caption{Signaalverzwakking / path loss}
+\end{figure}
+
+\subsubsection{Dynamic rate shifting (DRS)}
+\begin{itemize}
+    \item Modulatietechniek dynamisch aanpassen aan de signaalcondities
+    \item Minder gunstige SNR $\Rightarrow$ Lagere datarate kiezen
+    \item Andere modulatievorm 
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200309_123624.png}
+    \caption{Signaalverzwakking / path loss}
+\end{figure}
+
+\subsubsection{Reflectie}
+\begin{itemize}
+    \item Signaal wordt gereflecteerd
+    \item Bv:
+    \begin{itemize}
+        \item Door metalen objecten
+        \item Water
+        \item \dots
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200309_124220.png}
+    \caption{Reflectie}
+\end{figure}
+
+\subsubsection{Absorptie}
+
+\begin{itemize}
+    \item Signaal kan deels of volledig worden geabsorbeerd 
+    \item Resulteert in verzwakking van bruikbare signaal
+    \item Verzwakking = attentuatie typisch in dB
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200309_124354.png}
+    \caption{Absorptie}
+\end{figure}
+
+\subsubsection{Doordringbaarheid}
+\begin{itemize}
+    \item Hogere frequenties worden gemakkelijk tegengehouden door objecten
+    \item Lagere frequenties kunnen gemakkelijker door objecten heen
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200309_124451.png}
+    \caption{Doordringbaarheid}
+\end{figure}
+
+\subsubsection{Scattering}
+\begin{itemize}
+    \item Signaal wordt gereflecteerd in diverse richtingen
+    \item Oneffen oppervlaktes
+    \item Wolken materiaal bv zand, \dots
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200309_124533.png}
+    \caption{Scattering}
+\end{figure}
+
+\subsubsection{Refractie}
+\begin{itemize}
+    \item Bij 2 media met verschillende dichtheid
+    \item Afbuiging van het signaal
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200309_124610.png}
+    \caption{Refractie}
+\end{figure}
+
+\subsubsection{Difractie}
+\begin{itemize}
+    \item RF-signaal wordt beïnvloed door obstakels
+    \item Gaat er niet door maar “rond”, zoals water rond een paaltje in een rivier
+    \item Verstoort / verminkt het RF-signaal
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200309_124659.png}
+    \caption{Difractie}
+\end{figure}
+
+\subsubsection{Fresnel zones}
+\begin{itemize}
+    \item Golfmodel RF-signalen 
+    \item Worden ook beïnvloed door objecten in nabijheid
+    \item Niet enkel door objecten in line-of-sight
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200309_124752.png}
+    \caption{Fresnel zones}
+\end{figure}
+
+\begin{itemize}
+    \item Afhankelijk van frequentie en afstand
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200309_124825.png}
+    \caption{}
+\end{figure}
+
+\begin{itemize}
+    \item Communiatie kan verstoord worden, zelfs door een object buiten de line-of-sight
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200309_125331.png}
+    \caption{}
+\end{figure}
+
+\subsubsection{Propagatie van RF-signalen}
+
+\begin{itemize}
+    \item Bepaalde effecten kunnen worden gebruikt
+    \item Bv: 
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200309_125500.png}
+    \caption{communicatie mbv reflectie op de ionosfeer}
+\end{figure}
+
+\subsubsection{MIMO}
+
+\begin{itemize}
+    \item = Multiple In / Multiple Out
+    \item Reflectie en scattering kan positief worden gebruikt 
+    \item Beamforming
+    \item Extra processing
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200309_125719.png}
+    \caption{MIMO}
+\end{figure}
+
+\subsubsection{Multiplexing}
 
 \end{document}
