@@ -7,11 +7,10 @@
 \usepackage{caption}
 \usepackage{hyperref}
 \usepackage{amsmath}
+\usepackage{wrapfig}
 
 
-\graphicspath{
-    {img/}
-} 
+\graphicspath{{img/}} 
 
 \newcommand{\bold}[1]{\textbf{#1}}
  
@@ -32,34 +31,43 @@
 
 \section {Communicatie}
 \subsection{Datacommunicatie in IoT}
-3 lagen:
+\subsubsection{De 3 lagen}
 \begin{enumerate}
     \item Application Layer
     \item Fog layer
     \item IoT Device Layer
 \end{enumerate}
 
-\includegraphics[width=0.95\textwidth]{Screenshot_20200210_120010.png}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Screenshot_20200210_120010.png}
+    \caption{Datacommunicatie in IoT}
+\end{figure}
+
+
 
 \subsection{Data}
 \begin{itemize}
     \item "Pre-informatie"
     \item Gegevens waaruit informatie kan worden gewonnen
     \item Stelt een bepaalde toestand voor
+    \item \url{https://en.wikipedia.org/wiki/Data}
 \end{itemize}
 
 \subsection{Communicatie}
-Overbrengen van informatie tussen deelnemers
+= Overbrengen van informatie tussen deelnemers
 \begin{itemize}
     \item Boodschap
     \item Signaal
     \item Medium
 \end{itemize}
 
-\subsubsection{Communicatieafspraken}
+\subsection{Communicatieafspraken}
 \begin{itemize}
     \item Coderen van informatie (encoding)
-    \item Voorbeeld:
+    \item Voorbeelden:
+    \begin{itemize}
         \item morse-code
         \item Ascii-codering
         \begin{itemize}
@@ -68,16 +76,18 @@ Overbrengen van informatie tussen deelnemers
             \item 1 byte = 1 teken
         \end{itemize}
         \item \dots
+    \end{itemize}
 \end{itemize}
   
-\subsubsection{Encoding/Decoding}
+\subsection{Encoding/Decoding}
+3 stappen:
 \begin{enumerate}
     \item Codifying
     \item Sending the message
     \item Decodifying
 \end{enumerate}
 
-\subsubsection{Signalen}
+\subsection{Signalen}
 \begin{itemize}
     \item Licht
     \item Geluid
@@ -85,19 +95,19 @@ Overbrengen van informatie tussen deelnemers
     \item \dots
 \end{itemize}
 
-\subsubsection{Communicatiemedia}
+\subsection{Communicatiemedia}
 \begin{itemize}
     \item Twisted-Pair cable
     \item Coaxial cable
     \item Fiber-Optic cable
 \end{itemize}
 
-\subsubsection{Voorbeelden}
-\begin{itemize}
-    \item Welke codering?
-    \item Wat is het signaal?
-    \item Wat is het medium?
-\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Screenshot_20200315_105647.png}
+    \caption{Soorten kabels}
+\end{figure}
+
 
 \subsubsection{Eigenschappen van media}
 \begin{itemize}
@@ -105,6 +115,7 @@ Overbrengen van informatie tussen deelnemers
     \item Overbrugbare afstand
     \item Praktisch
     \item Kostprijs
+    \item \dots
 \end{itemize}
 
 \subsubsection{Afspraken}
@@ -112,7 +123,7 @@ Overbrengen van informatie tussen deelnemers
     \item Protocol
     \item Standaarden
     \item IEEE
-    \item EIA (NEDA/ECA)ECIA
+    \item EIA (NEDA/ECA) $\Rightarrow$ ECIA
 \end{itemize}
 
 \subsubsection{Standaardiseren van \dots}
@@ -168,13 +179,24 @@ Overbrengen van informatie tussen deelnemers
     \item Digitaal signaal
 \end{itemize}
 
-\includegraphics[width=0.4\textwidth]{Screenshot_20200217_115642.png}
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Screenshot_20200217_115642.png}
+    \caption{Analoog vs digitaal signaal}
+\end{figure}
 \section{Analoge signalen}
+
+\subsection{Omzetten van analoge signalen}
 
 \subsubsection{Transducer}
 Omzetten van een analoog signaal naar een ander analoog signaal.\\
 \bold{Voorbeeld}: elektrisch signaal omzetten naar een geluidsignaal via een luidspreker (=de transducer)
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Screenshot_20200315_111132.png}
+    \caption{Luidspreker}
+\end{figure}
 
 \subsubsection{Sensoren en Actuatoren}
 \begin{itemize}
@@ -183,7 +205,21 @@ Omzetten van een analoog signaal naar een ander analoog signaal.\\
 \end{itemize}
 
 \subsection{Analoge communicatie}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200315_111720.png}
+    \caption{Analoge communicatie}
+\end{figure}
+
+\subsection{Analoog signaal}
 Sinusgolf als meest elementaire signaal
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200315_113310.png}
+    \caption{Sinusgolf}
+\end{figure}
 
 \subsubsection{Eigenschappen}
 \begin{itemize}
@@ -192,7 +228,13 @@ Sinusgolf als meest elementaire signaal
     \item Polariteit verandert bij AC
 \end{itemize}
 
-\includegraphics[width=0.5\textwidth]{Screenshot_20200217_121011.png}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200217_121011.png}
+    \caption{DC vs AC}
+\end{figure}
 
 \subsubsection{Wisselspanning - Eigenschappen}
 \begin{itemize}
@@ -210,36 +252,69 @@ Sinusgolf als meest elementaire signaal
     \item Amplitude
     \item Peak of top-to-top waarde
 \end{itemize}
-\includegraphics[width=0.7\textwidth]{Screenshot_20200217_121136.png}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200217_121136.png}
+    \caption{Eigenschappen wisselspanning}
+\end{figure}
 
 \subsubsection{Periodieke signalen}
 \begin{itemize}
     \item 1 herhaling = 1 periode
     \item Periode (T) = tijdsduur (in s)
     \item Frequentie (f) = aantal periodes per seconde (in Hz)
-    \item $F = \frac1T$ en $T = \frac1F$
+    \item $F = \frac1T$ $\Leftrightarrow$ $T = \frac1F$
 \end{itemize}
 
-\includegraphics[width=0.7\textwidth]{Screenshot_20200217_122002.png}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Screenshot_20200217_122002.png}
+    \caption{Sinusgolf met periode $T$}
+\end{figure}
+
 
 \subsubsection{Tijdsdomein en frequentiedomein}
 \begin{itemize}
     \item Tijdsdomein: met een oscilloscoop
-    \item Frequentiedomein: met 
+    \item Frequentiedomein: met spectraalanalyse 
 \end{itemize}
 
-\includegraphics[width=0.7\textwidth]{Screenshot_20200217_122108.png}
-\\
-(Formule niet te kennen)1
-\\
-\includegraphics[width=0.7\textwidth]{Screenshot_20200217_122246.png}
+\begin{figure}[H]
+    \centering
+    \centerline{
+        \includegraphics[width=0.4\textwidth]{Screenshot_20200217_122108.png}
+        \includegraphics[width=0.5\textwidth]{Screenshot_20200217_122246.png}    
+    }
+    \caption{Tijdsdomein vs Frequentiedomein}
+\end{figure}
 
 \section{Digitale signalen}
-Aan/uit
+= Aan/uit
 
+\subsection{Eigenschappen}
+\begin{itemize}
+    \item Amplitude: Piek- of top-waarde, RMS-waarde
+    \item Periode / frequentie
+    \item Pulsbreedte 
+    \item Duty-cycle
+\end{itemize}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Screenshot_20200315_120112.png}
+    \caption{Eigenschappen digitaal signaal}
+\end{figure}
 
 \subsection{Duty Cycle}
 = Hoeveel procent van de tijd staat het signaal aan?
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200315_120616.png}
+    \caption{Duty cycles}
+\end{figure}
 
 \subsection{Flanken (edge)}
 \begin{itemize}
@@ -248,12 +323,22 @@ Aan/uit
     \item Belangrijk bij kloksignalen
 \end{itemize}
 
-\includegraphics[width=0.5\textwidth]{Screenshot_20200217_123230.png}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200217_123230.png}
+    \caption{Flanken}
+\end{figure}
 
 \subsection{Weergave digitale signalen}
-\includegraphics[width=1\textwidth]{Screenshot_20200217_125726.png}
 
-\section{AD/DA conversie}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200217_125726.png}
+    \caption{Weergave digitale signalen}
+\end{figure}
+
+
+\section{AD conversie}
 
 \begin{figure}[H]
     \centering
@@ -261,24 +346,18 @@ Aan/uit
     \caption{Analoog naar digitaal (AD converter)}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_115212.png}
-    \caption{Digitaal naar analoog (DA converter)}
-\end{figure}
-
 \subsection{Analoog naar digitaal}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{Screenshot_20200224_115430.jpg}
-    \caption{}
+    \caption{Analoog naar digitaal conversie}
 \end{figure}
 
 \begin{itemize}
-    \item Range = verschil tussen laagste en hoogste waarde
-    \item Resolutie = aantal stappen of stapgrootte in bits
-    \item Belangrijk gevolg:
+    \item \bold{Range} = verschil tussen laagste en hoogste waarde
+    \item \bold{Resolutie} = aantal stappen of stapgrootte in bits
+    \item \bold{Belangrijk gevolg:}
     \begin{itemize}
         \item beide parameters bepalen de exactheid en de afwijkingen
     \end{itemize}
@@ -303,32 +382,31 @@ Aan/uit
     \item ofwel $\approx$ $3mV$/stap
 \end{itemize}
 
+\subsection{Eigenschappen}
+
+\subsubsection{Quantisatiefouten}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_120800.jpg}
-    \caption{AD conversie}
+    \centerline{
+        \includegraphics[width=0.5\textwidth]{Screenshot_20200224_120800.jpg}
+        \includegraphics[width=0.5\textwidth]{Screenshot_20200224_120900.jpg}    
+    }
+    \caption{Quantisatiefouten door AD conversie}
 \end{figure}
 
 \begin{itemize}
-    \item Quantisatiefouten
-    \item Verzoorzaakt quantisatieruis
-\end{itemize}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_120900.jpg}
-    \caption{AD conversie}
-\end{figure}
-
-\begin{itemize}
+    \item Verzorzaakt quantisatieruis
     \item Quantisatiefouten $\rightarrow$ dithering
     \item = \underline{vooraf} (witte) ruis toevoegen aan signaal
 \end{itemize}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_121151.png}
+    \centerline{
+        \includegraphics[width=0.4\textwidth]{Screenshot_20200224_121151.png}
+        \includegraphics[width=0.3\textwidth]{Screenshot_20200315_122540.png}
+    }
     \caption{Dithering}
 \end{figure}
 
@@ -341,7 +419,7 @@ Aan/uit
 \end{figure}
 
 \begin{itemize}
-    \item Nyquist $\rightarrow$ Minimale sample rate = 2x de frequentie van het signaal
+    \item \bold{Nyquist rate} = Minimale sample rate = 2x de frequentie van het signaal
     \item Voorbeelden:
     \begin{itemize}
         \item HiFi Audio CD: 44.1kHz sample rate
@@ -352,12 +430,12 @@ Aan/uit
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_121935.png}
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200224_121935.png}
     \caption{Minimale sample rate}
 \end{figure}
 
 \subsubsection{Aliasing}
-= HF signaal als LF 'spooksignaal' detecteren 
+= High Frequency signaal als Low Frequency 'spooksignaal' detecteren 
 \begin{itemize}
     \item Treedt op bij onvoldoende hoge sample rate
     \item Anti-Aliasing filter (low-pass filter) beperkt signaal onder nyquist frequentie
@@ -381,7 +459,7 @@ Aan/uit
     \item Undersampling $\rightarrow$ specifiek gebruik bij mixers
 \end{itemize}
 
-\subsubsection{Implementatie en types}
+\subsection{Implementatie en types}
 \begin{itemize}
     \item De comparator
     \item Bekeken als 1-bit ADC
@@ -403,7 +481,7 @@ Aan/uit
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_122635.png}
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200224_122635.png}
     \caption{Flash ADC}
 \end{figure}
 
@@ -422,7 +500,13 @@ Aan/uit
     \caption{Successive approximation ADC}
 \end{figure}
 
-\subsection{Digitaal naar analoog conversie}
+\section{Digitaal naar analoog conversie}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200224_115212.png}
+    \caption{Digitaal naar analoog (DA converter)}
+\end{figure}
+
 \begin{itemize}
     \item Omzetten digitale naar analoge waarde
     \item Range
@@ -430,10 +514,10 @@ Aan/uit
     \item Samplefrequentie
 \end{itemize}
 
-\subsubsection{Simpele DAC}
+\subsection{Simpele DAC}
 \begin{itemize}
-    \item Binair $\rightarrow$ analoge waarde
-    \item \underline{Voorbeeld} weerstandsnetwerk
+    \item Binair $\Rightarrow$ analoge waarde
+    \item \underline{Voorbeeld}: weerstandsnetwerk
 \end{itemize}
 
 \begin{figure}[H]
@@ -442,7 +526,7 @@ Aan/uit
     \caption{Weerstandsnetwerk}
 \end{figure}
 
-\subsubsection{Simpele DAC adhv PWM}
+\subsection{Simpele DAC met PWM}
 \begin{itemize}
     \item PWM == digitaal signaal
     \item Door variatie van duty-cycle kan de gemiddelde waarde worden gevarieerd
@@ -455,9 +539,9 @@ Aan/uit
     \caption{DAC met PWM}
 \end{figure}
 
-\subsubsection{Andere types}
+\subsection{Andere types}
 \begin{itemize}
-    \item $\Sigma\Delta$
+    \item $\Sigma\Delta$ (sigma delta) = herhaaldelijk downsampelen
     \item $I^2S$ DAC
     \item Nog zeer veel andere overwegingen:
     \begin{itemize}
@@ -467,7 +551,7 @@ Aan/uit
     \end{itemize}
 \end{itemize}
 
-\subsubsection{Nalezen:}
+\subsection{Extra info over AD/DA conversie:}
 \begin{itemize}
     \item \url{https://en.wikipedia.org/wiki/Digital-to-analog_converter}
     \item \url{https://en.wikipedia.org/wiki/Analog-to-digital_converter}
@@ -517,7 +601,7 @@ Aan/uit
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{Screenshot_20200302_115646.png}
-    \caption{}
+    \caption{Interconnectie van devices}
 \end{figure}
 
 \subsection{Hoe?}
@@ -531,16 +615,18 @@ Aan/uit
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_115827.png}
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200302_115827.png}
     \caption{Draaggolf}
 \end{figure}
+
+\subsubsection{Parameters van een draaggolf}
 
 \begin{itemize}
     \item Amplitude
     \item Frequentie / Periode
 \end{itemize}
 
-\subsection{Simpel}
+\subsection{Simpele modulatie}
 \begin{itemize}
     \item Aan/uit schakelen van de draaggolf
     \item CW = continuous wave
@@ -586,7 +672,7 @@ Aan/uit
     \caption{Overmodulatie}
 \end{figure}
 
-\subsection{AM bandbreedte}
+\subsubsection{AM bandbreedte}
 \begin{itemize}
     \item Bandbreedte van een AM signaal:
     \begin{itemize}
@@ -598,24 +684,29 @@ Aan/uit
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Screenshot_20200302_120508.png}
-    \caption{}
+    \caption{AM bandbreedte}
 \end{figure}
 
-\subsection{SSB modulatie (USB/LSB)}
+\subsubsection{SSB modulatie (USB/LSB)}
 \begin{itemize}
     \item Alle informatie zit in elke sideband (zijband) bij AM
-    \item Carrier + een sideband wegfilteren = reductie van de bandbreedte
+    \item Carrier + 1 sideband wegfilteren = reductie van de bandbreedte
     \item Efficienter gebruik van het spectrum
     \item Moeilijk om goed te demoduleren
 \end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200315_153734.png}
+    \caption{Zijbanden AM band}
+\end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_120812.png}
-    \caption{}
+    \includegraphics[width=\textwidth]{Screenshot_20200302_120812.png}    
+    \caption{SSB Modulatie: we zenden alleen 1 van de zijbanden}
 \end{figure}
 
-\subsection{ASK Modulatie}
+\subsubsection{ASK Modulatie}
 \begin{itemize}
     \item Amplitude shift keying
     \item Vorm van AM-modulatie voor digitale signalen
@@ -635,7 +726,7 @@ Aan/uit
     \caption{4 level ASK}
 \end{figure}
 
-\subsection{Frequentie modulatie}
+\subsection{Frequentie modulatie (=FM)}
 \begin{itemize}
     \item Variatie in de frequentie van de draaggolf
     \item FM radio 88MHz - 108MHz
@@ -646,10 +737,10 @@ Aan/uit
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{Screenshot_20200302_121335.png}
-    \caption{Frequentiemodulatie}
+    \caption{Frequentie modulatie}
 \end{figure}
 
-\subsection{FSK modulatie}
+\subsubsection{FSK modulatie}
 \begin{itemize}
     \item Frequency Shift Keying
     \item Vorm van FM
@@ -662,7 +753,7 @@ Aan/uit
     \caption{FSK}
 \end{figure}
 
-\subsection{FM Modulatie}
+\subsubsection{FM Modulatie}
 \begin{itemize}
     \item Carrier is altijd op 100\% amplitude aanwezig tijdens transmissie
     \item Minder ruis, betere kwaliteit voor audio dan AM
@@ -672,22 +763,22 @@ Aan/uit
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_121650.png}
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200302_121650.png}
     \caption{Bandbreedte FM - NFM - WFM}
 \end{figure}
 
-\subsection{Fase modulatie}
+\subsubsection{Fase modulatie}
 \begin{itemize}
     \item Faseverschuiving van een signaal
 \end{itemize}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_121855.png}
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200302_121855.png}
     \caption{Faseverschuiving}
 \end{figure}
 
-\subsection{PSK modulatie}
+\subsubsection{PSK modulatie}
 \begin{itemize}
     \item Phase shift keying
     \item Bij wisselen van bit $\Rightarrow$ fase omkeren
@@ -699,7 +790,7 @@ Aan/uit
     \caption{Fasemodulatie}
 \end{figure}
 
-\subsection{Phase Shift Modulatie}
+\subsubsection{Phase Shift Modulatie}
 \begin{itemize}
     \item BPSK $\Rightarrow$ Binary PSK = 2 fase
     \item QPSK $\Rightarrow$ Quadrature PSK = 4 fase
@@ -711,7 +802,7 @@ Aan/uit
     \caption{}
 \end{figure}
 
-\subsection{QAM modulatie}
+\subsubsection{QAM modulatie}
 \begin{itemize}
     \item Quadrature amplitude modulatie
     \item Informatie zit \dots
@@ -726,12 +817,28 @@ Aan/uit
         \item 64-QAM
         \item \dots
     \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{Screenshot_20200315_160021.png}
+    \caption{QAM modulatie}
+\end{figure}
+
+
+\begin{itemize}
     \item DAB+ $\Rightarrow$ 4/16/64 - QAM
     \item Hogere transmissiesnelheid
     \item Gevoeliger voor fouten
 \end{itemize}
 
-\subsection{Bandbreedte / vermogen}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_123030.png}
+    \caption{16-, 64-, 256-QAM}
+\end{figure}
+
+\subsubsection{Bandbreedte / vermogen}
 \begin{itemize}
     \item Meer bandbreedte = hogere snelheid
     \item Meer bandbreedte = hoger vermogen nodig
@@ -743,13 +850,8 @@ Aan/uit
     \caption{}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{Screenshot_20200302_123030.png}
-    \caption{}
-\end{figure}
 
-\subsection{Waarom Narrow-band}
+\subsubsection{Waarom Narrow-band?}
 \begin{itemize}
     \item Oppervlakte van het signaal = Power
     \item Bij smalbandige signalen $\Rightarrow$ betere SNR (signaal-naar-ruis) verhouding bij hetzelfde vermogen
@@ -795,19 +897,25 @@ Aan/uit
     \item Meer bandbreedte = mogelijk hogere datarates
 \end{itemize}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Screenshot_20200315_160828.png}
+    \caption{Impact van hogere bandbreedtes op datarates}
+\end{figure}
+
 \subsection{Licenties en licentievrije banden}
 \begin{itemize}
     \item Beheer van het spectrum 
     \item In Belgie door het BIPT
     \item In de VS door het FCC
     \item Harmonisatie in Europa / VS / Azië
-    \item url{https://www.bipt.be/nl/operatoren/radio/frequentiebeheer/frequentieplan/tabel}
+    \item \url{https://www.bipt.be/nl/operatoren/radio/frequentiebeheer/frequentieplan/tabel}
 \end{itemize}
 
 \subsection{ISM banden}
 \begin{itemize}
     \item = Industrial / Scientific / Medical - Band
-    \item Hoeft geen vergunning voor gebruik
+    \item Geen vergunning nodig voor gebruik
     \item Is aan strikte voorwaarden verbonden
     \begin{itemize}
         \item Maximaal vermogen
@@ -890,17 +998,17 @@ Wat als meerdere systemen dezelfde band gebruiken?
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{Screenshot_20200309_121003.png}
-    \caption{Golflengte}
+    \caption{Golflengte $\lambda$}
 \end{figure}
 
 \subsubsection{Rekenvoorbeeld}
+Frequentie van $102.1\text{ MHz}$
 \begin{itemize}
-    \item Frequentie van $102.1MHz$
     \item $\lambda = \frac{299\ 792\ 458 \text{ m/s}}{102.1\text{ MHz}} = 2.936\dots \text{ m}$
-    \item "De 70 cm band":
-    \begin{itemize}
-        \item $f = \frac{(299\ 792\ 458)}{\lambda} = \frac{(299\ 792\ 458)}{0.7\ \text{m}} =  428\ 274\ 940\ \text{Hz} = 430\ \text{MHz}$
-    \end{itemize}
+\end{itemize}
+"De 70 cm band":
+\begin{itemize}
+    \item $f = \frac{(299\ 792\ 458)}{\lambda} = \frac{(299\ 792\ 458)}{0.7\ \text{m}} =  428\ 274\ 940\ \text{Hz} = 430\ \text{MHz}$
 \end{itemize}
 
 \subsection{Antennesysteem}
@@ -944,7 +1052,7 @@ Wat als meerdere systemen dezelfde band gebruiken?
         \item Meestal dipolen of end-fed (=stukje draad)
         \item Discone
     \end{itemize}
-    \item Directionele antenne
+    \item Directionele antenne (beam)
     \begin{itemize}
         \item Schotelantenne
         \item Yagi
@@ -987,7 +1095,7 @@ Wat als meerdere systemen dezelfde band gebruiken?
     \caption{Gain van een antenne}
 \end{figure}
 
-\subsubsection{Propagatie van RF-signalen}
+\subsection{Propagatie van RF-signalen}
 \begin{itemize}
     \item Absorptie
     \item Reflectie
@@ -999,13 +1107,13 @@ Wat als meerdere systemen dezelfde band gebruiken?
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Screenshot_20200309_123000.png}
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200309_123000.png}
     \caption{Propagatie van RF-signalen}
 \end{figure}
 
 \subsubsection{Path loss}
 \begin{itemize}
-    \item Verzwakking van het signaal met afstand zonder obstakels $\Rightarrow$ free space path loss
+    \item Verzwakking van het signaal met afstand zonder obstakels $\Rightarrow$ \underline{free space path loss}
     \item \bold{Oorzaak} uitdeinen van het signaal
     \item Verzwakking is exponentieel met de afstand
     \item Enkel afhankelijk van frequentie en afstand
@@ -1035,7 +1143,7 @@ FSPL (dB) $= 20\cdot log_{10}(d) + 20\cdot log_{10}(f) + 32.44$
     \caption{Signaalverzwakking / path loss}
 \end{figure}
 
-\subsubsection{Dynamic rate shifting (DRS)}
+\subsubsection{Dynamic Rate Shifting (DRS)}
 \begin{itemize}
     \item Modulatietechniek dynamisch aanpassen aan de signaalcondities
     \item Minder gunstige SNR $\Rightarrow$ Lagere datarate kiezen
@@ -1045,7 +1153,7 @@ FSPL (dB) $= 20\cdot log_{10}(d) + 20\cdot log_{10}(f) + 32.44$
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{Screenshot_20200309_123624.png}
-    \caption{Signaalverzwakking / path loss}
+    \caption{Dynamic Rate Shifting}
 \end{figure}
 
 \subsubsection{Reflectie}
@@ -1149,7 +1257,7 @@ FSPL (dB) $= 20\cdot log_{10}(d) + 20\cdot log_{10}(f) + 32.44$
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{Screenshot_20200309_124825.png}
-    \caption{}
+    \caption{Fresnel zone radius is afhankelijk van frequentie en afstand}
 \end{figure}
 
 \begin{itemize}
@@ -1159,14 +1267,14 @@ FSPL (dB) $= 20\cdot log_{10}(d) + 20\cdot log_{10}(f) + 32.44$
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{Screenshot_20200309_125331.png}
-    \caption{}
+    \caption{Verstoring door object in line-of-sight van transmissie}
 \end{figure}
 
 \subsubsection{Propagatie van RF-signalen}
 
 \begin{itemize}
     \item Bepaalde effecten kunnen worden gebruikt
-    \item Bv: 
+    \item Bv: Communicatie mbv reflectie op de ionosfeer
 \end{itemize}
 
 \begin{figure}[H]
@@ -1181,7 +1289,7 @@ FSPL (dB) $= 20\cdot log_{10}(d) + 20\cdot log_{10}(f) + 32.44$
     \item = Multiple In / Multiple Out
     \item Reflectie en scattering kan positief worden gebruikt 
     \item Beamforming
-    \item Extra processing
+    \item Extra processing nodig
 \end{itemize}
 
 \begin{figure}[H]
