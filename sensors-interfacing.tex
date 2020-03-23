@@ -1300,4 +1300,311 @@ FSPL (dB) $= 20\cdot log_{10}(d) + 20\cdot log_{10}(f) + 32.44$
 
 \subsubsection{Multiplexing}
 
+\section{Seriele communicatie}
+\subsection{Serieel vs parallel}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Screenshot_20200323_114507.png}
+    \caption{Serieel vs parallel}
+\end{figure}
+
+\subsection{Parallelle communicatie}
+\begin{itemize}
+    \item Eenvoudig
+    \item Sneller (bij eenzelfde kloksnelheid)
+    \item Veel connecties
+    \item Clock skew / jitter
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200323_114732.png}
+    \caption{Parallelle communicatie}
+\end{figure}
+
+\subsubsection{Clock skew}
+\begin{itemize}
+    \item Verschillende vertraging tussen signalen
+    \item Begrensd maximale klokfrequentie
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Screenshot_20200323_114937.png}
+    \caption{Clock skew}
+\end{figure}
+
+\subsection{Seriele communicatie}
+\begin{itemize}
+    \item Minder bekabeling
+    \item Minder problemen met timing
+    \item Minder last van crosstalk
+    \item Complexer / SERDIS
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Screenshot_20200323_115035.png}
+    \caption{}
+\end{figure}
+
+\subsection{Serieel vs Parallel: wanneer gebruiken?}
+\begin{itemize}
+    \item Lange afstanden: serieel, want minder verbindingen
+    \item Vroeger: lokale korte verbindingen, parallel
+    \item Tegenwoordig: snelle lokale verbindingen, serieel
+    \item ATA in harde schijven vervangen door SATA (Serial ATA)
+    \item PCI vervangen door PCI Express op moederborden, ook serieel
+\end{itemize}
+
+\subsection{SERDIS}
+\begin{itemize}
+    \item Serialiser
+    \item Deserialiser
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Screenshot_20200323_115743.png}
+    \caption{SERDIS}
+\end{figure}
+
+\subsubsection{Implementatie}
+Met schuifregister
+\begin{itemize}
+    \item SIPO (serial in parallel out)
+    \item PISO (parallel in serial out)
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200323_115735.png}
+    \caption{Schuifregister}
+\end{figure}
+
+\subsection{Duplex}
+\begin{itemize}
+    \item Full-duplex
+    \item Half-duplex
+    \item Simplex
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200323_115925.png}
+    \caption{Verschillende verbindingen}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200323_120141.png}
+    \caption{Full duplex}
+\end{figure}
+
+\subsection{Flow Control}
+Beperken hoeveel de zender kan/mag versturen.
+
+\begin{itemize}
+    \item Kan in hardware $\Rightarrow$ extra verbindingen
+    \item Kan in software $\Rightarrow$ controle karakters
+\end{itemize}
+
+\begin{itemize}
+    \item Hardware (CTS / RTS / Enable / \dots)
+    \item Xon / Xoff: starten/stoppen van het signaal
+    \item No
+\end{itemize}
+
+\subsection{Synchroon vs Asynchroon}
+\begin{itemize}
+    \item Synchroon $\Rightarrow$ Gebruikt een aparte kloklijn
+    \item Asynchroon $\Rightarrow$ Geen kloklijn
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200323_120525.png}
+    \caption{Kloklijn}
+\end{figure}
+
+\subsection{Synchrone seriele communicatie}
+\begin{itemize}
+    \item 1 device genereert de klok
+    \item Alle transmissies synchroniseren op deze klok
+    \item Kan op de stijgende flank of op de dalende flank 
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Screenshot_20200323_120955.png}
+    \caption{Synchrone seriele communicatie}
+\end{figure}
+
+
+\subsection{Asynchrone seriele communicatie}
+\begin{itemize}
+    \item Werkt zonder aparte kloklijn
+    \item Dus minder verbindingen
+    \item Syncrhonisatie door ontvanger noodzakelijk
+    \item Start en stop bit (/conditie) noodzakelijk
+\end{itemize}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200323_121104.png}
+    \caption{Asynchrone seriele communicatie}
+\end{figure}
+
+\subsubsection{Parameters}
+\begin{itemize}
+    \item Baudrate (=bits per seconde)
+    \item Aantal databits
+    \item Pariteitsbit
+    \item Aantal stop bits
+\end{itemize}
+
+\subsubsection{Standaarnotering}
+\begin{itemize}
+    \item Bijvoorbeeld: 9600-8-N-1
+    \item Baudrate = 9600
+    \item 8 = aantal databits
+    \item N = welke pariteit
+    \item 1 = aantal stop-bits
+\end{itemize}
+
+\subsubsection{Baudrate}
+= Snelheid in bits/seconde
+\begin{itemize}
+    \item Niet alle bits zijn databits
+    \item Start, stop en pariteitsbit transporteren geen data
+\end{itemize}
+
+\bold{Bijvoorbeeld}
+\begin{itemize}
+    \item 8-N-1 $\Rightarrow$ 80\% efficientie
+    \item 8 databits van in totaal $8+1+1=10\ \text{bits} = 8/10\ \text{of}\ 80\%$
+\end{itemize}
+
+\subsubsection{Aantal databits}
+\begin{itemize}
+    \item Typisch 7 of 8 databits
+    \item 7 bit is voldoende voor niet extended ASCII
+    \item 8 bit $\Rightarrow$ noodzakelijk voor binaire transmissie (bv voor firmware)
+    \item XMODEM / ZMODEM protocollen voor binaire transfers (weinig gebruikt want er bestaan nieuwere protocollen zoals USP)
+\end{itemize}
+
+\subsubsection{Pariteit}
+= Foutdetectie
+\\
+\bold{Soorten pariteit}
+\begin{itemize}
+    \item Even (E)
+    \item Odd (O)
+    \item None (N)
+\end{itemize}
+
+Aantal 1 bits tellen en dit aantal steeds even of oneven maken
+
+\subsubsection{Stopbits}
+\begin{itemize}
+    \item Aantal bits op het einde van een data-bit reeks
+    \item $1/1.5/2\ $ bits
+\end{itemize}
+
+\subsection{Snelheid}
+\begin{itemize}
+    \item 1 transmissie = 1 karakter
+    \item Aantal bits voor 1 karakter = som alle bits
+    \item Baudrate in bits/seconde
+\end{itemize}
+
+\bold{Voorbeeldoefening}
+\begin{itemize}
+    \item 300-8-E2
+    \item 8 databits + 1 pariteit + 2 stopbits + 1 startbit = 12bits
+    \item 300 bits/seconde = 300 / 12 = 25 CPS (=characters per second)
+\end{itemize}
+
+\subsection{Meerdere deelnemers}
+\begin{itemize}
+    \item Multi device bus
+    \item Daisy chain (=de ene deelnemer hangt aan de andere tot we aan de laatste deelnemer hangen, dan hangt de laatste ook aan de eerste)
+    \item $\Rightarrow$ afspraken/arbitrage is noodzakelijk
+\end{itemize}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200323_122755.png}
+    \caption{Meerdere deelnemers op een bus}
+\end{figure}
+
+\subsection{Manchester encoding}
+\begin{itemize}
+    \item Manier om asynchroon te werken, maar de klok en datasignaal in 1 signaal te stoppen
+    \item Altijd voldoende omschakeling (bv voor RF tranmissie)
+    \item Met AND-operatie
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Screenshot_20200323_123031.png}
+    \caption{Manchester encoding: Clock \& Data = OUTPUT}
+\end{figure}
+
+\subsection{Differentiele communicatie}
+\begin{itemize}
+    \item Differential vs single-ended
+    \item Zowel synchroon als asynchroon kan differentieel of single-ended werken
+    \item Minder gevoelig aan storingen
+\end{itemize}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200323_123305.png}
+    \caption{Single-ended (boven) vs Differentieel (onder)}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200323_123231.png}
+    \caption{Wat er gebeurt bij storing bij een differentieel signaal}
+\end{figure}
+
+\subsection{Benoeming van signalen}
+Deze namen vind je vaak op protocollen en devices zoals de Arduino, RPi, \dots
+
+\begin{itemize}
+    \item RX $\Rightarrow$ receiver
+    \item TX $\Rightarrow$ transmitter
+    \item Dit is mogelijks ambigu zijn. Oplossing: nieuwe naamgeving:
+    \begin{itemize}
+        \item MOSI $\Rightarrow$ Master Out Slave In
+        \item MISO $\Rightarrow$ Master In Slave Out
+    \end{itemize}
+    \item CS $\Rightarrow$ Chip Select
+    \item EN $\Rightarrow$ Enable
+    \item R/W $\Rightarrow$ Read/Write
+    \item SCL $\Rightarrow$ Serial Clock
+    \item SDA $\Rightarrow$ Serial Data
+    \item Minder gebruikte signalen (Niet expliciet te kennen)
+    \begin{itemize}
+        \item CTS 
+        \item DTR
+    \end{itemize}
+    \item \dots
+\end{itemize}
+
+\subsection{Protocollen}
+= Standaarden voor communicatieafspraken
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200323_124324.png}
+    \caption{Schema dat toont hoe het protocol werkt}
+\end{figure}
+
 \end{document}
