@@ -1607,4 +1607,276 @@ Deze namen vind je vaak op protocollen en devices zoals de Arduino, RPi, \dots
     \caption{Schema dat toont hoe het protocol werkt}
 \end{figure}
 
+\section{Bussystemen}
+
+\begin{itemize}
+    \item Enkel directe punt-tot-punt verbindingen naar centrale eenheid
+    \item Meerdere devices delen een bus
+\end{itemize}
+
+$\Rightarrow$ Bussystemen zijn praktischer en (vaak) goedkoper
+
+\subsection{Communicatie op een bus}
+\begin{itemize}
+    \item Gelijktijdig gebruik van een bus is onmogelijk bij meerdere devices op deze bus
+    \item Gebruik van:
+    \begin{itemize}
+        \item TDM
+        \item Tokens (token ring)
+        \item CSMA (/CD)
+        \item Master / Slave
+        \item \dots
+    \end{itemize}
+\end{itemize}
+
+$\Rightarrow$ Dit zijn allemaal systemen voor arbitrage op een bus
+
+\subsection{Master / Slave communicatie}
+\begin{itemize}
+    \item Alle communicatie start vanuit de master
+    \item Slaves antwoorden op vraag van de master
+    \item \underline{Polling} van slaves voor informatie
+\end{itemize}
+
+\subsection{Serial Pheripheral Interface (SPI) communicatie}
+\begin{itemize}
+    \item Synchrone seriele bus (=er is een aparte kloklijn aanwezig)
+    \item Full duplex (=communicatie in 2 richtingen op hetzelfde moment mogelijk)
+    \item 1 master
+    \item 1 of meerdere slaves
+\end{itemize}
+
+\subsubsection{Werking}
+\begin{itemize}
+    \item MOSI (Master Out Slave In)
+    \item MISO (Master In Slave Out)
+    \item Gemeenschappelijke klok
+    \item Chip(/Slave) Select (CS/SS) per slave
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Screenshot_20200330_113936.png}
+    \caption{Werking SPI}
+\end{figure}
+
+\subsubsection{Eigenschappen}
+
+\begin{itemize}
+    \item Elke lijn heeft slechts 1 driving source (aansturingsbron)
+    \item Clock gegenereerd door master
+    \item Collisions zijn onmogelijk
+    \item Slechts een enkele SPI Slave actief per moment
+    \item Actieve Slave door Master gekozen (via Chip Select (CS) lijn)
+    \item Een SPI Slave kan geen communicatie aanvragen, behalve via een eventueel aparte lijn (IRQ) lost van de SPI bus
+\end{itemize}
+
+\subsubsection{Timing Diagram}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Screenshot_20200330_114211.png}
+    \caption{SPI Timing Diagram}
+\end{figure}
+
+\begin{itemize}
+    \item SS laag om communicatie tot stand te brengen
+    \item Master genereert een klok na SS
+    \item Master stuurt verzoek naar slave: byte wordt doorgeklokt
+    \item Slave stuurt op kloksignaal data terug
+    \item Master-To-Slave en Slave-To-Master tegelijk is mogelijk want full-duplex
+\end{itemize}
+
+\subsection{I2C communicatie}
+\begin{itemize}
+    \item Inter-IC Circuit (IIC $\Rightarrow$ $I^2C$)
+    \item Synchrone seriele interface (=aparte kloklijn)
+    \item 2 open collector lijnen: Clock \& Data (SCL \& SDA)
+    \item Half duplex
+    \item 1 of meerdere masters (!) ("multi master bussysteem")
+    \item 1 of meerdere slaves
+    \item Slaves hebben elk een adres (beslist door fabrikant)
+    \item Typisch \underline{lagere communicatiesnelheden} dan SPI
+\end{itemize}
+
+\subsubsection{I2C schema}
+\begin{itemize}
+    \item SCL = Serial Clock
+    \item SDA = Serial Data
+    \item Beide zijn "Open Collector" $\Rightarrow$ Pull-up weerstanden
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200330_120948.png}
+    \caption{I2C schema}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200330_114601.png}
+    \caption{I2C schema}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Screenshot_20200330_114819.png}
+    \caption{I2C Timing Diagram}
+\end{figure}
+
+\begin{itemize}
+    \item Startconditie
+    \item 7 adresbits + 1 R/W bit: master leest (1) of schrijft (0)?
+    \item Acknowledge-bit
+    \item 8 data bits + Acknowledge-bit, herhaaldelijk tot alle data gelezen of gestuurd is
+    \item Stopconditie
+\end{itemize}
+
+\subsubsection{Eigenschappen}
+
+\begin{itemize}
+    \item Slechts 2 lijnen, onafhankelijk van hoeveelheid slaves
+    \item Hoger stroomverbruik door pull-up weerstanden
+    \item Multi-master mogelijk (complexer, niet vaak gebruikt)
+    \item Elke slave heeft een adres (fabriek)
+    \item Adresconflicten beperken vaak het gebruik van meerdere dezelfde Slave devices
+\end{itemize}
+
+\subsection{Flow Control}
+\subsubsection{Problemen}
+\begin{itemize}
+    \item Kan de ontvanger de data op tijd verwerken?
+    \item Is de data klaar om verzonden te worden?
+    \item Is er voldoende plaats in een FIFO-buffer (First In First Out, buffer kan overflowen)?
+\end{itemize}
+
+\bold{Mogelijke oplossingen:}
+\begin{itemize}
+    \item Hopen op succes en fouten opvangen (retransmission)
+    \item Flow control
+\end{itemize}
+
+\subsubsection{Hardware flow control}
+\begin{itemize}
+    \item RTS/CTS lijnen bij RS232 (wordt gebruikt bij Arduino en RPi)
+    \item Clock stretching bij $I^2C$: slave maakt de clock trager zodat er meer tijd is om de data te verwerken
+    \item \dots
+\end{itemize}
+
+\subsubsection{Software flow control}
+\begin{itemize}
+    \item XON/XOFF: stoppen met zenden (XOFF) tot de data verwerkt is (XON)
+    \begin{itemize}
+        \item Kan soms voor fouten zorgen
+    \end{itemize}
+    \item \dots
+\end{itemize}
+
+\subsubsection{Geen flow control}
+\begin{itemize}
+    \item Deterministische timing gebruiken
+    \item Retransmisie van ontbrekende data
+\end{itemize}
+
+\subsection{Belangrijke bus-interfaces}
+\begin{itemize}
+    \item UART Logic-Level / RS232
+    \begin{itemize}
+        \item Variant: RS485 / RS422 (langere afstanden, differentieel)
+    \end{itemize} 
+    \item SPI
+    \item PSP (Parallell Slave Port, dus niet serieel, bij snellere devices gebruikt)
+    \item CAN / LIN (zoals $I^2C$, maar voor in voertuigen)
+    \item $I^2C$
+    \item $I^2S$ (S = sound, voor geluid te transfereren)
+    \item 1-wire (Dallas)
+\end{itemize}
+
+\section{Foutdetectie en correctie}
+\subsection{Integriteitscontrole}
+\begin{itemize}
+    \item Is de ontvangen data correct?
+    \item Data kan 'verminkt' worden
+    \begin{itemize}
+        \item Door ruis
+        \item Door transmissiefouten zoals collisions
+        \item Door moedwillige aanpassing (!)
+        \item ...
+    \end{itemize}
+\end{itemize}
+
+\subsection{Detectie van fouten}
+\begin{itemize}
+    \item Pariteitscontrole
+    \item 1 parity bit toevoegen
+    \begin{itemize}
+        \item Even parity
+        \item Odd parity
+    \end{itemize}
+\end{itemize}
+
+$\Rightarrow$ totale aantal 1-bits even of oneven maken
+$\Rightarrow$ afspraak tussen zender en ontvanger moet correct zijn
+
+\subsubsection{Parity check}
+\begin{itemize}
+    \item Voorbeeld even pariteit: de zender voegt een pariteitsbit toe zodat het aantal 1-bits altijd even is. 
+    Als de ontvanger een oneven aantal 1-bits ontvangt, weet hij dat er een fout gebeurd is.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Screenshot_20200420_115619.png}
+    \caption{Voorbeeld even pariteit}
+\end{figure}
+    \item 1-bit fouten worden gedetecteerd (zie character q)
+    \item 2-bit fouten worden niet opgemerkt (zie character C)
+\end{itemize}
+
+\subsection{Foutcorrectie}
+\begin{itemize}
+    \item Error correction code (ECC)
+    \item Detectie en soms correctie van fouten
+    \item Voorbeelden:
+    \begin{itemize}
+        \item Reed-solomon code
+        \item Hamming-code 
+        \item Turbo code
+        \item CRC's
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Cyclic Redundancy Check (CRC)}
+\begin{itemize}
+    \item Kan steeds alle 1-bit fouten detecteren
+    \item Kan fouten tot aantal CRC-bits detecteren
+    \item Kan sommige andere fouten detecteren, afhankelijk van het gekozen polynoom
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Screenshot_20200420_121925.png}
+    \caption{Voorbeeld CRC}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Screenshot_20200420_120455.png}
+    \caption{Voorbeeld CRC-4 met polynoom $x^3 + 1$}
+\end{figure}
+
+
+\subsection{Integriteitscontrole}
+\begin{itemize}
+    \item Foutdetectiecodes zijn geen cryptografische functies:
+    \begin{itemize}
+        \item ECC beschermt tegen toevallige fouten
+        \item ECC beschermt niet tegen bewuste manipulatie
+    \end{itemize}
+    \item Geruik een hash-functie bij integriteitscontrole
+    \begin{itemize}
+        \item Bijvoorbeeld SHA2 of SHA3
+    \end{itemize}
+\end{itemize}
+
+
 \end{document}
