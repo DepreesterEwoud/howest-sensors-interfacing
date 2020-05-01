@@ -8,12 +8,13 @@
 \usepackage{hyperref}
 \usepackage{amsmath}
 \usepackage{wrapfig}
+\usepackage[parfill]{parskip}
 
 
 \graphicspath{{img/}} 
  
 \newcommand{\bold}[1]{\textbf{#1}}
- 
+
 \begin{document}
 
 \begin{titlepage}
@@ -123,7 +124,6 @@
     \item Protocol
     \item Standaarden
     \item IEEE
-    \item EIA (NEDA/ECA) $\Rightarrow$ ECIA
 \end{itemize}
 
 \subsubsection{Standaardiseren van \dots}
@@ -892,7 +892,7 @@ Sinusgolf als meest elementaire signaal
     \begin{itemize}
         \item 2.4GHz WiFi: 20MHz bandbreedte
         \item 5GHZ 802.11ac WiFi: 80MHz bandbreedte
-        \item 1 WiFi kanaal > volledige AM-radio LW + MW + SW band
+        \item 1 WiFi kanaal $>$ volledige AM-radio LW + MW + SW band
     \end{itemize}
     \item Meer bandbreedte = mogelijk hogere datarates
 \end{itemize}
@@ -1113,11 +1113,11 @@ Frequentie van $102.1\text{ MHz}$
 
 \subsubsection{Path loss}
 \begin{itemize}
-    \item Verzwakking van het signaal met afstand zonder obstakels $\Rightarrow$ \underline{free space path loss}
+    \item Verzwakking van het signaal met afstand zonder obstakels $\Rightarrow$ \underline{free space path loss (FSPL)}
     \item \bold{Oorzaak} uitdeinen van het signaal
     \item Verzwakking is exponentieel met de afstand
     \item Enkel afhankelijk van frequentie en afstand
-    \item Hogere frequenties hebben hoger path loss
+    \item Hogere frequenties hebben hogere path loss
 \end{itemize}
 
 FSPL (dB) $= 20\cdot log_{10}(d) + 20\cdot log_{10}(f) + 32.44$
@@ -1299,6 +1299,8 @@ FSPL (dB) $= 20\cdot log_{10}(d) + 20\cdot log_{10}(f) + 32.44$
 \end{figure}
 
 \subsubsection{Multiplexing}
+
+todo
 
 \section{Seriele communicatie}
 \subsection{Serieel vs parallel}
@@ -1836,7 +1838,7 @@ $\Rightarrow$ afspraak tussen zender en ontvanger moet correct zijn
 \begin{itemize}
     \item Error correction code (ECC)
     \item Detectie en soms correctie van fouten
-    \item Voorbeelden:
+    \item \underline{Voorbeelden:}
     \begin{itemize}
         \item Reed-solomon code
         \item Hamming-code 
@@ -1877,6 +1879,7 @@ $\Rightarrow$ afspraak tussen zender en ontvanger moet correct zijn
         \item Bijvoorbeeld SHA2 of SHA3
     \end{itemize}
 \end{itemize}
+
 
 
 \end{document}
