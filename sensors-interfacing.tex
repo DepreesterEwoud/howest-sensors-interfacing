@@ -1299,8 +1299,102 @@ FSPL (dB) $= 20\cdot log_{10}(d) + 20\cdot log_{10}(f) + 32.44$
 \end{figure}
 
 \subsubsection{Multiplexing}
+= delen van 1 medium
 
-todo
+\begin{itemize}
+    \item Verschillende signalen / meerdere deelnemers
+    \item Multiplexing $\Rightarrow$ medium $\Rightarrow$ Demultiplexing
+\end{itemize}
+
+\subsubsection{FDM - Frequency Division Mux}
+
+\begin{itemize}
+    \item Verschillende deelnemers maken gebruik van verschillende frequenties
+    \item Zoals radiozenders gelijktijdig uitzenden op hun eigen frequentie
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{fdm.jpg}
+    \caption{FDM}
+\end{figure}
+
+\subsubsection{WDM - Wavelength Division Mux}
+\begin{itemize}
+    \item Bij optische signalen
+    \item Verschillende golflengte gebruiken over 1 fibre
+    \item Vergelijkbaar met FDM
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{wdm.png} 
+    \caption{WDM}
+\end{figure}
+
+\subsubsection{TDM - Time Division Mux}
+\begin{itemize}
+    \item Elke transmissie krijgt een tijdslot
+    \item Tijdssloten wisselen volgens afspraak 
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{tdm.png} 
+    \caption{TDM}
+\end{figure}
+
+\subsubsection{OFDM}
+\begin{itemize}
+    \item Orthogonal Frequency Division Multiplexing
+    \item Opsplitsen van bitstream in aparte bitstreams
+    \item Deze worden op aparte subcarriers verzonden
+    \item Subcarriers overlappen elkaar
+    \item Subcarriers zijn in fase gesyncroniseerd
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{ofdm.png} 
+    \includegraphics[width=0.5\textwidth]{ofdm2.png} 
+    \caption{OFDM}
+\end{figure}
+
+\begin{itemize}
+    \item Vaak met QAM/QPSK gecombineerd
+    \item Uitermate spectraal efficiënt, benadert het theoretisch maximum volgens Nyquist-Shannon
+    \item Door de in fase gesynchroniseerde subcarriers
+    \item hebben de overlappende frequenties geen nadelig effect
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{ofdm3.png} 
+    \caption{OFDM}
+\end{figure}
+
+\subsection{Belangrijk voor IoT communicatie}
+
+\begin{itemize}
+    \item Kostprijs
+    \begin{itemize}
+        \item Kost van hardware
+        \item Communicatiekost / gebruikskost
+        \item Licentiekost
+    \end{itemize}
+    \item Overbrugbare afstand
+    \item Datarate / snelheid
+    \item Stroomverbruik
+    \item Bereik (beschikbaar, binnen gebouwen)
+    \item Standaardisatie
+    \item \dots
+\end{itemize}
+
+\subsection{Draadloze technologieën}
+\begin{itemize}
+    \item Ware zoo van beschikbare technologieën
+    \item In staat zijn de correcte technologie te kiezen is van zeer groot belang
+\end{itemize}
 
 \section{Seriele communicatie}
 \subsection{Serieel vs parallel}
