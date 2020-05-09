@@ -10,6 +10,10 @@
 \usepackage{wrapfig}
 \usepackage[parfill]{parskip}
 
+% fonts
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
 
 \graphicspath{{img/}} 
  
@@ -42,7 +46,7 @@
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{Screenshot_20200210_120010.png}
+    \includegraphics[width=0.8\textwidth]{Screenshot_20200210_120010.png}
     \caption{Datacommunicatie in IoT}
 \end{figure}
 
@@ -184,12 +188,13 @@
     \includegraphics[width=0.4\textwidth]{Screenshot_20200217_115642.png}
     \caption{Analoog vs digitaal signaal}
 \end{figure}
+
+
 \section{Analoge signalen}
-
 \subsection{Omzetten van analoge signalen}
-
 \subsubsection{Transducer}
-Omzetten van een analoog signaal naar een ander analoog signaal.\\
+Omzetten van een analoog signaal naar een ander analoog signaal.
+
 \bold{Voorbeeld}: elektrisch signaal omzetten naar een geluidsignaal via een luidspreker (=de transducer)
 
 \begin{figure}[H]
@@ -805,7 +810,7 @@ Sinusgolf als meest elementaire signaal
 \subsubsection{QAM modulatie}
 \begin{itemize}
     \item Quadrature amplitude modulatie
-    \item Informatie zit \dots
+    \item Informatie zit in \dots
     \begin{itemize}
         \item de amplitude (zoals bij ASK)
         \item de fase (zoals bij PSK)
@@ -1593,7 +1598,7 @@ Beperken hoeveel de zender kan/mag versturen.
 
 \subsubsection{Pariteit}
 = Foutdetectie
-\\
+
 \bold{Soorten pariteit}
 \begin{itemize}
     \item Even (E)
@@ -1974,6 +1979,32 @@ $\Rightarrow$ afspraak tussen zender en ontvanger moet correct zijn
     \end{itemize}
 \end{itemize}
 
+
+\section{Herhaling: Te kennen formules}
+\subsection{Frequentie en periode}
+$F = \frac1T$ $\Leftrightarrow$ $T = \frac1F$
+
+\subsection{Analoog naar digitaal omzetten}
+\subsubsection{Gegeven}
+
+\begin{itemize}
+    \item Range = 2V - 2.5V
+    \item Resolutie = 8bits
+    
+\end{itemize}
+
+\subsubsection{Gevraagd}
+Aantal mV per stap
+
+\subsubsection{Oplossing}
+\begin{itemize}
+    \item Dus aantal discrete stappen = $2^8 = 256 \Rightarrow 256 - 1 = 255$
+    \item Stapgrootte (LSB) = $\frac{range}{255} = \frac{2.5V - 2V}{255} = \frac{0.5V}{255} = 0.00196..V / stap$
+    \item ofwel $\approx$ $2mV$/stap
+\end{itemize}
+
+\subsection{Golflengte}
+$\lambda = \frac{c}{f}$, met $c =$ de lichtsnelheid $= 299\ 792\ 458\ \text{m/s} \approx 300\ 000\ 000\ \text{m/s}$
 
 
 \end{document}
