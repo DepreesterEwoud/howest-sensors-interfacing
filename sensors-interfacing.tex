@@ -388,8 +388,7 @@ Sinusgolf als meest elementaire signaal
 
 \begin{itemize}
     \item Verzorzaakt quantisatieruis
-    \item Quantisatiefouten $\rightarrow$ dithering
-    \item = \underline{vooraf} (witte) ruis toevoegen aan signaal
+    \item Quantisatiefouten worden opgelost met dithering (= \underline{vooraf} (witte) ruis toevoegen aan signaal)
 \end{itemize}
 
 \begin{figure}[H]
@@ -787,7 +786,7 @@ Sinusgolf als meest elementaire signaal
         \item de amplitude (zoals bij ASK)
         \item de fase (zoals bij PSK)
     \end{itemize}
-    \item Meerdere symbolen
+    \item Meerdere vormen
     \begin{itemize}
         \item 4-QAM
         \item 16-QAM
@@ -1341,7 +1340,7 @@ Frequentie van $102.1\text{ MHz}$
     \caption{OFDM: in fase gesynchroniseerd}
 \end{figure}
 
-\subsection{Belangrijk voor IoT communicatie}
+\subsection{Belangrijke eigenschappen voor IoT communicatie}
 
 \begin{itemize}
     \item Kostprijs
@@ -1582,7 +1581,7 @@ Aantal 1 bits tellen en dit aantal steeds even of oneven maken door een 0 of een
 
 \bold{Voorbeeldoefening}
 \begin{itemize}
-    \item 300-8-E2
+    \item 300-8-E-2
     \item 8 databits + 1 pariteit + 2 stopbits + 1 startbit = 12bits
     \item 300 bits/seconde = 300 / 12 = 25 CPS (=characters per second)
 \end{itemize}
@@ -1728,7 +1727,7 @@ $\Rightarrow$ Dit zijn allemaal systemen voor arbitrage op een bus
     \item Collisions zijn onmogelijk
     \item Slechts een enkele SPI Slave actief per moment
     \item Actieve Slave door Master gekozen (via Chip Select (CS) lijn)
-    \item Een SPI Slave kan geen communicatie aanvragen, behalve via een eventueel aparte lijn (IRQ) lost van de SPI bus
+    \item Een SPI Slave kan geen communicatie aanvragen, behalve via een eventueel aparte lijn (IRQ) los van de SPI bus
 \end{itemize}
 
 \subsubsection{Timing Diagram}
@@ -1767,8 +1766,11 @@ $\Rightarrow$ Dit zijn allemaal systemen voor arbitrage op een bus
 \end{itemize}
 
 \begin{figure}[H]
-    \includegraphics[width=0.4\textwidth]{Screenshot_20200330_120948.png}
-    \includegraphics[width=0.5\textwidth]{Screenshot_20200330_114601.png}
+    \centering
+    \centerline{
+        \includegraphics[width=0.5\textwidth]{Screenshot_20200330_120948.png}
+        \includegraphics[width=0.5\textwidth]{Screenshot_20200330_114601.png}
+    }
     \caption{I2C schema}
 \end{figure}
 
