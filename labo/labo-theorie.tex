@@ -597,4 +597,80 @@ Communicatie met een slave:
 
 (zie week06-analoge-ingangen.pdf voor code)
 
+\section{I2C}
+= Inter-Integrated Circuit
+
+\begin{itemize}
+    \item Synchrone
+    \item Multi-master/multi-slave 
+    \item Tweedraads
+    \begin{itemize}
+        \item Kloksignaal (SCL) voor synchronisatie, met standaardfrequentie 100kHz
+        \item Bidirectionele datalijn (SDA)
+    \end{itemize}
+    \item Serieel
+    \item Slaves hebben 7-bit adressen
+\end{itemize}
+
+\subsection{I2C Protocol}
+\begin{itemize}
+    \item De bus is in rust hoog
+    \item De master genereert een Kloksignaal op SCL
+    \item Een transmissie begint steeds met een startconditie en eindigt met een stopconditie.
+    \item Kan zowel lezen als schrijven
+    \item 1 datalijn $\rightarrow$ bit per bit versturen, startend bij de MSB
+    \item Grote verschil met shiftregister: met I2C kunnen we rechtstreeks naar het correcte device sturen
+    \item Het slave adres bestaat uit 7 bits + 1 R/W bit (=readen of writen, 1 = schrijven, 0 = lezen)
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{i2c-protocol.png}
+    \caption{I2C Protocol: start $\rightarrow$ adres + r/w $\rightarrow$ ack $\rightarrow$ data $\rightarrow$ ack $\rightarrow$ ... $\rightarrow$ ack $\rightarrow$ stop}
+\end{figure}
+
+\subsubsection{Start en stop condition}
+De I2C bus is in rust toestand als beide lijnen (SCL en SDA) hoog zijn.
+
+\begin{itemize}
+    \item De startconditie is wanneer de SDA \bold{omlaag} getrokken wordt terwijl de kloklijn hoog staat.
+    \item De stopconditie is wanneer de SDA \bold{omhoog} getrokken wordt terwijl de kloklijn hoog staat.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{i2c-start-stop.png}
+    \caption{Start en stop}
+\end{figure}
+
+\subsubsection{Data transmission}
+\begin{itemize}
+    \item 1 byte serieel doorsturen (= bit per bit)
+    \item Eerst de datalijn hoog of laag zetten, dan de klok hoog of laag zetten. 
+    \item Zolang de klok hoog is, mag de data niet veranderen.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{i2c-timing.png}
+    \caption{Timingdiagram I2C data}
+\end{figure}
+
+\subsubsection{Acknowledge}
+Na elke byte kan de slave weergeven of hij de data al dan niet goed ontvangen heeft.
+
+\subsection{PCF8574 I/O Expander for I2C bus}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{pcf.png}
+    \includegraphics[width=0.4\textwidth]{pcf-pins.png}
+    \caption{PCF8574}
+\end{figure}
+
+\begin{itemize}
+    \item 
+\end{itemize}
+
+
 \end{document}
