@@ -1,0 +1,450 @@
+\documentclass{article}
+
+\usepackage[dutch]{babel}
+\usepackage[margin=3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{wrapfig}
+\usepackage[parfill]{parskip}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+basicstyle=\ttfamily,
+frame=single,
+breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+breaklines=true,                 % sets automatic line breaking
+commentstyle=\color{blue},
+showstringspaces=false
+}
+
+% fonts
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+ 
+\graphicspath{{img/}} 
+
+\newcommand{\bold}[1]{\textbf{#1}}
+
+\begin{document}
+
+\begin{titlepage}
+    \author{Tuur Vanhoutte}
+    \title{Sensors \& Interfacing: labo}
+\end{titlepage}
+
+\pagenumbering{gobble}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+\section{One-wire bus}
+\begin{itemize}
+    \item Ontworpen om over lange afstanden kleine hoeveelheden data te sturen. 
+    \item Kan makkelijk in kleine, goedkope sensoren ingebouwd worden
+    \item Voorzien van 3 pootjes (3 draden): 2 voor voeding (+ en -), 1 voor data
+    \item 1 master en 1 of meerdere slaves, elke slave heeft een uniek 64bit adres of slave ID
+\end{itemize}
+
+
+
+
+\subsection{Schema}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200619_150049.png}
+    \caption{Schema 1-wire bus met meerdere slaves}
+\end{figure}
+
+\subsection{Timingdiagram}
+Omdat er maar 1 draad beschikbaar is voor communicatie, moet het protocol vertrouwen op erg strikte timing.
+Raspbian voorziet een driver die daarvoor zorgt.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{timing-1w.png}
+    \caption{Timingdiagram}
+\end{figure}
+
+\subsection{Werking}
+\subsubsection{Open-collector outputs}
+Het is niet mogelijk om zomaar een digitale 0 voor te stellen als 0V, en een digitale 1 als 3.3V.
+Dat kan zorgen voor kortsluiting. Daarom gebruiken we een open-collector uitgang:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{open-collector.png}
+    \caption{Interne schakeling van een open-collector uitgang}
+\end{figure}
+
+In plaats van slaves toe te laten zelf een spanning op de bus te leggen, brengen we hem standaard op
+een hoog signaalniveau d.m.v. een \bold{externe pull-up weerstand}. 
+De uitgangen van ICs die op de bus communiceren worden dan voorzien van een \bold{extra transistor}
+waarvan de emitter (of source bij een FET) verbonden is met massa. 
+De basis (of gate) is verbonden met de uitgang van de logica en de collector (of drain)
+met de uitgangspin en dus de bus.
+
+\subsubsection{Data verzenden}
+De bus wordt via een externe weerstand verbonden met de voedingsspanning.
+Aangesloten apparaten in rust kunnen we beschouwen als een open circuit (de uitgangstransistor geleidt niet).
+De bus blijft dus standaard op een hoog signaalniveau en er vloeit (in theorie) geen stroom.
+
+Om data te verzenden, kan een deelnemer de transistor in geleiding brengen en zo de bus verbinden met
+massa. Op dit moment zal er een stroom vloeien, door de pull-up weerstand en uitgangstransistor naar massa. 
+De spanning op de bus bedraagt op dat moment (bijna) 0V, gegeven door de spanningsdeler tussen de 
+externe pull-up weerstand en de restweerstand van de transistor in geleiding.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Screenshot_20200619_152619.png}
+    \caption{Meerdere open-collector outputs (hier voorgesteld door schakelaars), op dezelfde bus}
+\end{figure}
+
+Wanneer nu een andere deelnemer op hetzelfde moment gaat communiceren, kan ook die enkel een
+verbinding van de bus naar massa maken. Elektrisch vormt dit geen enkel probleem, maar de communicatie
+van beide deelnemers zal uiteraard nog steeds verstoord zijn.
+
+
+\subsection{Voordelen en nadalen}
+\subsubsection{Voordelen}
+\begin{itemize}
+    \item \bold{Geen elektrische conflicten}: Meerdere deelnemers kunnen enkel meerdere verbindingen naar massa maken.
+    \item \bold{Flexibele spanning}: Omdat enkel de uitgangstransistor elektrisch met de bus verbonden is, is het
+    makkelijk om chips te maken die een verschillende spanning op de bus t.o.v. hun voedingsspanning
+    kunnen tolereren.
+\end{itemize}
+
+\subsubsection{Nadelen}
+\begin{itemize}
+    \item \bold{Hoog stroomverbruik}: Een laag signaalniveau betekent een constante stroom door de geleider, en ook
+    bij hoog signaalniveau zal er nog een kleine lekstroom door de transistors vloeien.
+\end{itemize}
+
+\section{Bitoperaties events}
+\subsection{Bits \& bytes}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{bits.png}
+    \caption{1 byte. Least Significant Bit (LSB) = rechts, Most Significant Bit (MSB) = links}
+\end{figure}
+
+\subsubsection{Hexadecimale notatie}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{hexa.png}
+    \caption{Omzetting van binair naar hexadecimaal. 1 nibble = 4 bits}
+\end{figure}
+
+\subsection{Python}
+\begin{itemize}
+    \item bin(x) om waarden om te zetten naar binair
+    \item hex(x) om waarden om te zetten naar hexadecimaal
+    \item int(x) om waarden om te zetten naar decimaal
+\end{itemize}
+
+\subsection{Bitwise Operators}
+\begin{itemize}
+    \item And: als beide inputs == 1, output = 1, anders 0
+    \item Or: als 1 van de inputs == 1, output 1, anders 0
+    \item Not: draai input om: 1 wordt 0, 0 wordt 1
+    \item Xor: als precies 1 van de inputs == 1, output = 1, anders 0
+\end{itemize}
+
+\begin{table}[H]
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Bitwise operator}} & \multicolumn{1}{c|}{\textbf{Symbol in python}} \\ \hline
+and                                             & \&                                             \\ \hline
+or                                              & |                                              \\ \hline
+not                                             & $\sim$                                         \\ \hline
+xor                                             & \textasciicircum{}                             \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.25\textwidth]{bitoperator-examples.png}
+    \caption{Voorbeelden bitoperaties}
+\end{figure}
+
+\subsubsection{Set bits}
+De OR-operatie kan je gebruiken om bits aan te zetten, ongeacht hun huidige waarde:
+\begin{lstlisting}[language=Python]
+>>> have = 0b11001010 # het register nu 
+>>> mask = 0b00000100 # dus maak ik een getal waar ENKEL bit 2 "aan" is
+>>> xxxx = 0b11001110 # wat ik wil nu wil uitkomen
+
+# en ik gebruik dat met de |-operator om de bit "aan" te zetten
+>>> result = have | mask 
+>>> xxxx == result
+True 
+\end{lstlisting}
+
+Hetzelfde principe kan je gebruiken met de \&-operator om bits op 0 te zetten,
+of bits te filteren (stel dat je alleen bit 2 nodig hebt, dan is je masker 0b00000100)
+
+\subsubsection{Toggle bits}
+Togglen van een bit kan je doen met de XOR-operatie (\textasciicircum{})
+
+\subsubsection{Bitwise NOT}
+Het resultaat van de NOT-operatie op een binair getal is niet het omgekeerde van het getal, 
+maar het negatieve getal. Om dat op te lossen moet je het negatieve getal AND-en met 0xFF.
+
+\subsubsection{Shift left/right}
+We kunnen bits opschuiven met $<<$ en $>>$. Dit is hetzelfde als vermenigvuldigen met 2 en delen met 2.
+
+\begin{lstlisting}[language=Python]
+>>> 0b00010100 >> 4 == 0b00000001
+True
+>>> 0b11001010 << 4 == 0b110010100000
+True
+>>> 0b11001010 << 8 == 0b1100101000000000
+True
+\end{lstlisting}
+
+\subsubsection{In-place operators}
+\begin{lstlisting}[language=Python]
+>>> x += 2       # x = x + 2
+>>> x -= 2       # x = x - 2
+>>> x |= 4       # x = x | 0x04 --> bit 2 is nu 1
+>>> x &= 253     # x = x & 0xfd --> bit 1 is nu 0
+>>> x ^= 0xf0    # x = x ^ 0xf0 --> 4 MSB worden getoggled
+>>> x <<= 2      # x = x << 2 --> alle bits 2 plaatsen naar links
+>>> x >>= 3      # x = x >> 3 --> alle bits 3 plaatsen naar rechts
+\end{lstlisting}
+
+\subsubsection{Volgorde van bewerkingen}
+\begin{enumerate}
+    \item not $\sim$
+    \item shift $<<$, $>>$
+    \item and \&
+    \item xor \textasciicircum{}
+    \item or |
+\end{enumerate}
+
+Gebruik haakjes!
+
+\subsection{Binary Coded Decimals (BCD)}
+Bij BCD worden 4 bits gebruikt om 1 decimaal cijfer weer te geven
+
+Voor het getal 91 worden dus groepjes van 4 bits gebruikt om elk getal weer te geven:
+\begin{lstlisting}
+Decimal:       9     1
+Binary:     1001  0001
+\end{lstlisting}
+
+\bold{Opgelet}: je mag niet zomaar wiskundige operaties toepassen op een BCD code.
+De decimale waarde van BCD-getal 91 is 128+32+1 = 161
+
+\subsection{Interrupts \& Events}
+\subsubsection{Interrupts}
+Een interrupt is een voorziening om de processor op de hoogte te stellen van een bepaalde
+gebeurtenis. 
+De CPU zal daarop zijn huidige werk onderbreken en een Interrupt Service Routine (ISR),
+ook wel Interrupt Handler genoemd, uitvoeren. 
+
+Na afloop gaat hij weer verder met de taak waar hij
+voordien aan werkte. Op deze manier hoeft er geen CPU-power verspild te worden met het
+wachten op gebeurtenissen.
+
+\subsubsection{Events}
+= signaalovergang
+
+\begin{lstlisting}[language=Python]
+GPIO.add_event_detect(channel, GPIO.RISING) # add rising edge detection
+
+do_something_else() # thread is bezig met andere dingen
+
+if GPIO.event_detected(channel):
+    print('Button released')
+    # dit werkt nog altijd
+\end{lstlisting}
+
+
+\subsubsection{Callbacks}
+\begin{lstlisting}[language=Python]
+def my_callback(channel):
+    print('This is a edge event callback function!')
+    print('Edge detected on channel %s'%channel)
+    print('This is run in a different thread to your main program')
+
+GPIO.add_event_detect(channel, GPIO.RISING, callback=my_callback)
+\end{lstlisting}
+
+Je kan meerdere callbacks op eenzelfde pin registeren door gewoon meerdere keren de methode GPIO.add\_event\_callback(\dots) op te roepen.
+
+\bold{Bouncetime}
+
+Bijkomende parameter bij add\_event\_detect(): aantal milliseconden dat dient om de knop te ontdenderen (debounce). 
+
+
+\section{Seriele communcatie}
+Bv: communicatie tussen Arduino en Raspberry Pi. 
+
+\bold{Opgelet:} de Pi werkt op 3.3V en de meeste arduino's op 5V. 
+We moeten een levelshifter gebruiken.
+
+\subsection{Serieel protocol}
+Zeer eenvoudig om full-duplex te werken:
+
+\begin{itemize}
+    \item een draad om data te versturen
+    \item een draad om data te ontvangen
+    \item gemeenschappelijke massa (GND)
+    \item Het is een point-to-point verbinding: 2 deelnemers, dus geen adressering nodig
+\end{itemize}
+
+De chip die zo'n seriele interface aanstuurt noemt men een UART (Universal Asynchronous Receiver / Transmitter).
+De termen UART, RS-232 en seriele poort worden vaak door elkaar gebruikt. RS-232 of Recommended Standard 232
+omschrijft connectoren, elektrische eigenschappen \dots
+
+\subsection{Hardware (Layer 1)}
+\begin{itemize}
+    \item Oorspronkelijk:
+    \begin{itemize}
+        \item 0 = 3 tot 15V
+        \item 1 = -3 tot -15V
+    \end{itemize}
+    \item Tegenwoordig:
+    \begin{itemize}
+        \item Veel devices werken op -5V tot +5V
+        \item Hetzelfde protocol maar op TTL-niveau (0-5V)
+    \end{itemize}
+    \item De bus is standaard hoog, wat door de UART zelf geregeld wordt. We moeten dus geen pull-up voorzien.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{ttl-vs-rs232.png}
+    \caption{TTL (boven) vs RS-232 (onder)}
+\end{figure}
+
+\subsubsection{Crossed cable of null-modemkabel}
+De TX-pin van de zender moet verbonden worden met de RX-pin van de ontvanger en vice versa. 
+In de context van de oude seriele poort noemt men zo'n crossed cable een null-modemkabel.
+
+Seriële verbindingen werden veel gebruikt voor het verbinden van een modem met je PC, en met zo’n null-modemkabel kon je dan 2 computers rechtstreeks
+verbinden zonder de modems ertussen.
+
+\subsection{Protocol (Layer 2)}
+Alle data bits bevinden zich tussen een start- en stopsignaal. De start bit is één 0-bit, de volgende
+zeven of acht bits vormen een databyte. Eventueel kan er als controle nog een parity bit worden
+toegevoegd. Het teken wordt telkens afgesloten door één of twee stop bits.
+
+Aan de kant van de ontvanger wordt de data aan het start- en stopsignaal herkend.
+Het aantal start-, data- en stopbits kan worden ingesteld en moet uiteraard langs beide kanten overeen komen.
+
+\subsubsection{Baudrate}
+= De snelheid = symbolen per seconde
+
+\begin{itemize}
+    \item Zender en ontvanger moeten dezelfde baudrate hebben
+    \item Hogere rate $\rightarrow$ hogere eisen qua elektrische verbinding en timingnauwkeurigheid
+    \item Lagere rate $\rightarrow$ minder snelle communicatie, maar grotere maximale kabellengte
+    \item Positieve spanning: lage bit, negatieve spanning: hoge bit
+\end{itemize}
+
+\bold{Veelgebruikte baudrates:}
+\begin{itemize}
+    \item 9600 baud (=veelvoud van 300, vandaag standaard maar traag, wordt door vrijwel elke UART ondersteund)
+    \item 19200, 57600, 115200 baud (= veelvouden van 9600)
+    \item 64k baud en veelvouden
+    \item 1M baud en veelvouden
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{serielecommunicatie.png}
+    \caption{Timingdiagram seriele communicatie}
+\end{figure}
+
+\subsection{Flow control}
+Mechanisme waarmee zender en ontvanger elkaar kunnen verwittigen wanneer ze klaar zijn voor datatransmissie. 
+Dat kan zowel in hardware (dus met extra signaaldraden), of in software met speciale karakters.
+
+\bold{Hardware:}
+\begin{itemize}
+    \item RTS/CTS: Request To Send/Clear To Send pins worden gebruikt om aan te geven dat het apparaat klaar is om data te sturen/ontvangen
+    \item DSR/DTR: Data Set Ready/Data Terminal Ready-lijnen die eigenlijk aangeven dat het apparaat online en klaar is, worden soms misbruikt voor flow control
+\end{itemize}
+
+\bold{Software:}
+\begin{itemize}
+    \item XON/XOFF: Zijn speciale ASCII-controletekens die als data van ontvanger naar verzender worden gestuurd om transmissie te starten/stoppen
+\end{itemize}
+
+Flow control was van groot belang om een modem aan te sluiten maar wordt vandaag niet meer veel gebruikt.
+
+\subsection{Verschillende opties seriele communicatie}
+\begin{enumerate}
+    \item USB kabel
+    \item Gebruik van seriele pins op de GPIO connector
+\end{enumerate}
+
+\subsection{Byte serieel versturen}
+Het serieel protocol heeft maar 1 draad om een byte (char) te versturen of ontvangen.
+Daarom moeten we elke byte ontleden en bit per bit versturen. De meeste protocollen starten met de MSB (meest linkse bit).
+
+\subsubsection{In python: PySerial}
+= een library om makkelijk een seriele poort te openen:
+
+\begin{lstlisting}[language=Python]
+import serial
+ser = serial.Serial('/dev/ttyS0') # open serial port
+print(ser.name)                   # check which port was really used
+ser.write(b'hello')               # write a string
+ser.close()                       # close port
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python]
+from serial import Serial, PARITY_NONE
+
+# simple echo server
+with Serial('/dev/ttyS0', 115200, bytesize=8, parity=PARITY_NONE, stopbits=1) as port:
+    while True:
+        line = port.readline()
+        port.write(line)
+\end{lstlisting}
+
+\subsection{Level shifter}
+= een module die we kunnen gebruiken om componenten die op een verschillende 
+spanning werken digitaal met elkaar te verbinden. 
+
+\begin{itemize}
+    \item De ene kant is low voltage (LV), de andere high voltage (HV)
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.2\textwidth]{levelshifter.png}
+    \caption{Een levelshifter met 4 bits}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{levelshifter-arduino.png}
+    \caption{Verbinding tussen Arduino en Pi. Let op de crossed cabling tussen Arduino en levelshifter}
+\end{figure}
+
+\section{Shiftregister}
+Een shiftregister ontvangt een aantal bits in serie die parallel naar buiten gebracht worden. 
+Op die manier kunnen we via één data pin van onze raspberry pi meerdere uitgangen creëren.
+
+Een shiftregister is opgebouwd uit een aantal elektronische componenten (flip flops of latches) die in serie
+geschakeld worden met elkaar en dezelfde klok delen. De uitgang van elke flip flop wordt gebruikt als ingang van de volgende. Zo’n schakelingen wordt ook een
+cascade (waterval) schakeling genoemd. Op die manier kan je ook meerdere shift registers met elkaar
+verbinden.
+
+\subsection{Shiftregister 74HC595}
+De shiftregisters uit jullie kit zijn high speed 8-bit `serieel in parallel out' registers.
+
+
+\end{document}
