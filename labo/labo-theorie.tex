@@ -500,5 +500,101 @@ Door een shiftregister toe te voegen beschikken we over 16 uitgangen met onze 5 
 Sommige shiftregisters kunnen ook als input gebruikt worden $\rightarrow$ meerdere digitale inputs met slechts 5 pinnen.
 
 
+\section{Analoge ingangen}
+\subsection{Resolutie}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{analoge-ingangen.png}
+    \caption{Voorbeeld analoog signaal met 3 bits resolutie $\rightarrow 2^3 = 8$}
+\end{figure}
+
+Onze MCP3004/3008 beschikt over 10 bits analoge ingangen = 1024 tussenstappen. 
+Spanningsnauwkeurigheid: $\frac{3.3V}{1024} = 3.2mV$
+
+\subsection{Serial Peripheral Interface (SPI)}
+= een synchrone seriële interface tussen ten minste twee devices. 
+
+\begin{itemize}
+    \item Er is altijd één master en \bold{ten minste één} slave. De master regelt de communicatie. 
+    \item Synchroon betekent dat de klokken van de verschillende devices worden gesynchroniseerd of gelijkgesteld met elkaar via een externe klok of een signaal van de master. 
+    \item Serieel houdt in dat de data na elkaar wordt verstuurd.
+    \item De communicatie is full-duplex
+    \item 4-draadse seriele bus
+\end{itemize}
+
+De 4 gebruikte lijnen:
+\begin{itemize}
+    \item SCLK (Serial Clock)
+    \item MOSI (Master Output Slave Input)
+    \item MISO (Master Input Slave Output)
+    \item SS (Slave Select), active low, wordt soms aangeduid met CE (Chip Enable) of CS (Chip Select)
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{spi.png}
+    \caption{SPI master met 3 slaves}
+\end{figure}
+
+De Raspberry Pi beschikt over 2 Slave Select pinnen, dus we kunnen 2 SPI slaves aansluiten.
+
+\subsection{Logische werking MCP3004/3008}
+= 4 of 8 kanaal 10-bit A/D-convertors met een SPI-interface.
+
+We kunnen aan deze IC's 4 of 8 analoge sensoren aansluiten, de IC zet de analoge waarde om naar een 10-bits digitaal getal.
+Via de SPI bus kunnen we de digitale data van de IC inlezen. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{timing-spi.png}
+    \caption{SPI timingdiagram}
+\end{figure}
+
+Per databit die verstuurd wordt, moet de master (RPi) telkens een klok signaal genereren.
+Tijdens de communicatie wordt de CS (=SS) naar een laag spanningsniveau gebracht
+
+\subsubsection{Configuratie MCP3008}
+
+Op de MCP3008 kan je het spanningsverschil tussen 2 kanalen opvragen ofwel een bepaalde spanning op een
+analoog kanaal. Deze keuze kunnen we maken door de MSB op 1 (=single) of 0 (diff).
+
+Het kanaal van de IC kan gekozen worden via de D2,D1 en D0 bit. 
+Heb je een sensor aangesloten op CH3 dan moet je een 1011 meegeven. 
+De MSB is 1 want we willen de spanning weten op het kanaal.
+
+\subsubsection{Protocol MCP3008}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{timing-spi-mcp.png}
+    \caption{SPI-communicatie met de MCP3004/3008}
+\end{figure}
+
+Communicatie met een slave:
+
+\begin{itemize}
+    \item Chip Select (CS) laag te brengen
+    \item De master genereert een klokpuls (SCLK)
+    \item Per tik van de klok kan er telkens een bit ontvangen en verstuurd worden.
+    \item De $\text{D}_{\text{IN}}$ lijn is de data die we moeten versturen van de Pi naar de MCP.
+    \item Er worden telkens 3 bytes verstuurd:
+    \begin{enumerate}
+        \item Byte met de startbit (0b00000001)
+        \item Byte die de som is van Single/Diff en D2, D1 en D0. Deze bits moeten we 4 keer naar links schuiven
+        \item Random byte (bv 0b00000000)
+    \end{enumerate}
+    \item En 3 bytes ontvangen:
+    \begin{enumerate}
+        \item Random byte 
+        \item Byte 1: B9 en B8 van het binair getal, met $2^9=512$  en $2^8=256$
+        \item Byte 2: de andere bits
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Python SpiDev}
+= library om gemakkelijk SPI communicatie te doen
+
+(zie week06-analoge-ingangen.pdf voor code)
 
 \end{document}
