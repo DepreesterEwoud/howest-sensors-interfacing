@@ -444,7 +444,61 @@ cascade (waterval) schakeling genoemd. Op die manier kan je ook meerdere shift r
 verbinden.
 
 \subsection{Shiftregister 74HC595}
-De shiftregisters uit jullie kit zijn high speed 8-bit `serieel in parallel out' registers.
+De 74HC595 is een high speed 8-bit `serieel in parallel out' shiftregister.
+We kunnen dus 8 bits na elkaar serieel versturen naar het register, 
+die bits worden vervolgens naar 8 parallelle uitgangen gebracht.
+
+Dit shiftregister heeft ook een storage register dat de data bij kan houden. 
+Voor het 7-segment display is dit handig omdat we de vorige waarde kunnen blijven tonen.
+
+\subsection{Pinnummering}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{shiftregister-pins.png}
+    \caption{Pin configuratie 74HC595}
+\end{figure}
+
+Deze pins moeten we verbinden met een GPIO-pin van de RPi:
+\begin{itemize}
+    \item Master Reset (MR)
+    \item De twee klokken (SHCP en STCP)
+    \item De Output Enable (OE)
+    \item De Serial Data (SD of $\text{D}_{\text{S}}$)
+\end{itemize}
+
+Q0 t.e.m. Q7 sluiten we aan ons component (hier: 7-segment display)
+
+Door gebruik te maken van 5 GPIO pinnen beschikken we nu over 8 digitale uitgangen.
+Door een shiftregister toe te voegen beschikken we over 16 uitgangen met onze 5 GPIO-pinnen.
+
+\subsection{Protocol}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{timing-shift.png}
+    \caption{Timingdiagram shiftregister 74HC595}
+\end{figure}
+
+
+\subsection{7-segment display met shiftregister}
+= display dat bestaat uit 8 segmenten (7 voor het cijfer + 1 voor het punt)
+
+\subsubsection{Twee soorten}
+\begin{enumerate}
+    \item Common Cathode
+    \item Common Anode
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{7-display.png}
+    \caption{7-segment display: twee soorten}
+\end{figure}
+
+\subsection{Shift input}
+Sommige shiftregisters kunnen ook als input gebruikt worden $\rightarrow$ meerdere digitale inputs met slechts 5 pinnen.
+
 
 
 \end{document}
