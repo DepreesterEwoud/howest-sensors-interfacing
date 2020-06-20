@@ -843,6 +843,66 @@ De MPU6050 heeft veel registers. Elk register heeft een bepaalde functie.
     \item Temperatuur metingen: in te lezen op registers 0x41 en 0x42
 \end{itemize}
 
+\section{Rotary encoder}
+= een soort draaibare knop
+
+\begin{itemize}
+    \item We kunnen uitlezen of we naar links of rechts draaien
+    \item Geen begin of eindpositie (`zotte knop')
+    \item Met tandjes: plaatjes in de stand waar de knop een stabiele positie heeft
+\end{itemize}
+
+\subsection{Werking}
+
+\begin{itemize}
+    \item Gemeenschappelijke ingang die verbonden is met een aantal contactzones op een schijf die met de knop meedraait.
+    \item Twee uitgangen die verbonden zijn op een vast punt, met een kleine afstand ertussen.
+    \item Drukknop
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{rotary.png}
+    \caption{Rotary encoder binnenkant}
+\end{figure}
+
+\begin{itemize}
+    \item Telkens je de knop een tand verder draait, schuift een contactzone over de pinnen en maken ze even contact
+    \item Naargelang de richtinv verschilt de volgorde
+    \begin{itemize}
+        \item In wijzerzin: eerst A, dan B
+        \item In tegenwijzerzin: eerst B, dan A
+    \end{itemize}
+    \item Als je de ingang hoog trekt et een pull-up en aan de knop draait, krijg je op beide uitgangen een blokgolf:
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{rotary-werking.png}
+    \caption{Rotary encoder: wijzerzin/tegenwijzerzin}
+\end{figure}
+
+\subsection{Pinconfiguratie}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{rotary-pins.png}
+    \caption{Pinconfiguratie rotary encoder}
+\end{figure}
+
+\begin{itemize}
+    \item A, B, C zijn respectievelijk de CLK, DT en GND pin
+    \item De rechteruitgangen zijn uitgangen voor de knop, gaat naar SW en GND (nog een pull-up nodig)
+    \item De + moet verbonden zijn met 3.3V: zorgt voor de pull-upfunctie van de encoder.
+\end{itemize}
+
+\section{MAX7219 serial interfaced, 8-digit display driver}
+= een driver-IC voor het aansturen van maximaal 8 7-segementdisplays via SPI. 
+
+\begin{itemize}
+    \item De chip heeft 8 registers die telkens ofwel een BCD-encoded cijfer of een 8-bitwaarde kunnen opnemen
+    \item Het decoderen van BCD en multiplexen van de 8 displays doet de chip volledig zelf.
+\end{itemize}
 
 
 
