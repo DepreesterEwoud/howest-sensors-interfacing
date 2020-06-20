@@ -682,6 +682,63 @@ Na elke byte kan de slave weergeven of hij de data al dan niet goed ontvangen he
     \caption{PCF8574 en PCF8574A adressen. A0, A1 en A2 kunnen we instellen door ze aan + of GND te hangen.}
 \end{figure}
 
+\section{LCD Display}
+
+\subsection{Pinconfiguratie}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{lcd-pin.png}
+    \caption{Pinconfiguratie LCD display}
+\end{figure}
+
+\subsection{Protocol LCD-displaycontroller (HD44780/KS0066)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{lcd-timing.png}
+    \caption{Timingdiagram LCD}
+\end{figure}
+
+\begin{itemize}
+    \item Het enable signaal E kunnen we vergelijken met het kloksignaal SCL van de SPI-bus of het shiftregister
+    \item Per klokpuls (in tegenstelling tot de voorbije hoofdstukken: bij de dalende flank) worden 8 bits data verwerkt
+    \item De volgorde van de signalen is heel belangrijk:
+    \begin{enumerate}
+        \item Enable hoog
+        \item Data klaarzetten
+        \item Enable laag
+        \item delay
+        \item \dots
+    \end{enumerate}
+    \item Er zijn nog 2 controlelijnen:
+    \begin{enumerate}
+        \item R/W bepaalt of we data lezen of schrijven (0=schrijven, 1=lezen)
+        \item RS (register select): bepaalt of een instructie of character wordt gestuurd. 
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Basisinstructies}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{lcd-instructies.png}
+    \caption{Basisinstructies LCD controller}
+\end{figure}
+
+Om het display te initialiseren moeten we volgende instructies aanroepen:
+\begin{itemize}
+    \item Function set (met type display: 2 lijnen, karakters = 5x7 pixels, datalengte = 8bit)
+    \item Display on
+    \item Clear display en cursor home
+\end{itemize}
+
+
+\subsection{Geheugen adressen van het LCD display}
+De controller van het display kan ook een display aansturen van 4x20 karakters, 
+daarom beschikt de controller over 40 geheugenadressen. 
+
+\begin{itemize}
+    \item Eerste lijn: adressen 0x00 t.e.m. 0x0F
+    \item Tweede lijn: adressen 0x40 t.e.m. 0x4F
+\end{itemize}
 
 
 
