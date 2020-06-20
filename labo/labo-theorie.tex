@@ -926,7 +926,7 @@ de MISO-pin is niet nodig want er kan toch niet geschreven naar de registers van
 De MAX7219 beschikt over 14 registers:
 
 \begin{table}[H]
-    \resizebox{\textwidth}{!}{%
+    \centering
     \begin{tabular}{|l|l|}
         \hline
         \multicolumn{1}{|c|}{\textbf{Register}} & \multicolumn{1}{c|}{\textbf{Functie}}                                                                                                          \\ \hline
@@ -937,8 +937,7 @@ De MAX7219 beschikt over 14 registers:
         0xB                                     & \begin{tabular}[c]{@{}l@{}}Scan Limit: stelt in hoeveel cijfers er zijn aangesloten \\ (bij ons: 7, want de matrix heeft 8 rijen)\end{tabular} \\ \hline
         0xC                                     & Shutdown: 1 als LSB om de uitgangen te activeren                                                                                               \\ \hline
         0xF                                     & Display test: alle LEDs oplichten                                                                                                              \\ \hline
-    \end{tabular}%
-    }
+    \end{tabular}
 \end{table}
 
 \subsection{Gebruik in Python}
