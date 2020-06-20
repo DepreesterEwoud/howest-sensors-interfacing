@@ -11,6 +11,7 @@
 \usepackage[parfill]{parskip}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{gensymb}
 
 \lstset{
 basicstyle=\ttfamily,
@@ -739,6 +740,109 @@ daarom beschikt de controller over 40 geheugenadressen.
     \item Eerste lijn: adressen 0x00 t.e.m. 0x0F
     \item Tweede lijn: adressen 0x40 t.e.m. 0x4F
 \end{itemize}
+
+\section{MPU 6050}
+
+= chip die op de GY-521 module zit in onze kit. 
+
+\begin{itemize}
+    \item De module kan:
+    \begin{itemize}
+        \item versnelling meten
+        \item orientatie bepalen
+        \item temperatuur meten
+    \end{itemize}
+    \item De metingen worden gedigitaliseerd met een 16-bit ADC 
+    \item Het bereik kan worden ingesteld (2-16g voor de accelerometer, 250-200°/s voor de gyroscoop)
+    \item Je kan de chip laten detecteren wanneer hij in vrije val is en daarop een interrupt-signaal laten genereren op de voorziene pin.
+\end{itemize}
+
+\subsection{Meetresultaten inlezen}
+
+\begin{itemize}
+    \item Kan via:
+    \begin{itemize}
+        \item SPI
+        \item $\text{I}^2\text{C}$
+    \end{itemize}
+    \item De GY-521 module werkt van 2.0 t.e.m. 3.6V (dus voeden met 3.3V van externe voeding)
+    \item De MPU6050 digitaliseert de metingen met een 16-bit ADC, elke waarde neemt dus 2 registers in beslag en wordt in big-endian formaat opgeslagen
+\end{itemize}
+
+
+
+\subsection{SM-bus (System Management Bus)}
+= interface gebaseerd op $\text{I}^2\text{C}$, met o.a. strikte paramters voor timing en voltage en een aantal vaste transacties.
+
+De bus zal zelf zorgen voor start- en stopconditie, acknowledges, en versturen van data. 
+We moeten enkel nog de correct instructie aanroepen, het adres meegeven, de eventuele data klaarzetten of inlezen.
+
+\subsection{Inertial Measurement Unit (IMU)}
+= een module om beweging en/of orientatie in 3D te bepalen. 
+Daarvoor wordt gebruik gemaakt van 1 of meer sensoren die telkens een resultaat voor de 3 assen (x,y,z) geven.
+
+\begin{itemize}
+    \item Wordt gebruikt in smartphones, vlieg- en ruimtetuigen, game controllers, \dots
+    \item IMU's worden ingedeeld volgens het aantal \textit{degrees of freedom} (DOF):
+    een accelerometer heeft 3 assen, als je een gyroscoop aan toevoegt heb je 6-DOF IMU, + magnetometer = 9-DOF IMU.
+    \item Deze sensoren zijn \textit{Micro Electro-Mechanical Systems (MEMS)} die werken met miniscule mechanische componenten op een chip.
+\end{itemize}
+
+\subsection{Accelerometer}
+\begin{itemize}
+    \item Meet versnelling (= verandering van beweging) in 3 dimensies
+    \item Eenheid: $\text{m/s}^2$ of g-force
+    \item Bestaat uit:
+    \begin{itemize}
+        \item een aantal vaste platen
+        \item daartussen een bewegende massa die is opgehangen aan een veersysteem
+    \end{itemize}
+    \item De vaste plaat en bewegende massa vormen een condensator waardoor de capaciteit door de sensor kan worden gemeten
+    \item Een accelerometer bevat 3 zulke opstellingen, 1 voor elke dimensie
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{accelerometer.png}
+    \caption{Accelerometer}
+\end{figure}
+
+
+\subsection{Gyroscoop}
+\begin{itemize}
+    \item Meet hoeksnelheid of veranderingen in orientatiehoek in 3 dimensies
+    \item Eenheid: $\degree$/s
+    \item Werkt zoals de accelerometer, maar dan met een massa die kan draaien ipv schuiven.
+    \item Als de beginorientatie bekend is, kan je door continu de veranderin erbij te tellen ook de huidige orientatie bepalen
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{gyroscope.png}
+    \caption{Gyroscoop}
+\end{figure}
+
+
+\subsection{Magnetometer}
+\begin{itemize}
+    \item Meet de sterkte van het magnetisch veld in 3 richtingen
+    \item Eenheid: Tesla (meestal micro- of nano-)
+    \item Met een magnetometer kunnen we dus een kompas toevoegen aan de meting en wordt het geheel nog een stuk betrouwbaarder
+\end{itemize}
+
+
+\subsection{Registers}
+De MPU6050 heeft veel registers. Elk register heeft een bepaalde functie.
+
+\begin{itemize}
+    \item Power management: 0x6B
+    \item Accelerometer configuratie: 0x1C
+    \item Accelerometer metingen: in te lezen via registers 0x3B t.e.m. 0x40
+    \item Gyroscoop configuratie: 0x1B
+    \item Gyroscoop metingen: in te lezen via registers 0x43 t.e.m. 0x48
+    \item Temperatuur metingen: in te lezen op registers 0x41 en 0x42
+\end{itemize}
+
 
 
 
