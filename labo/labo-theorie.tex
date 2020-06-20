@@ -904,6 +904,59 @@ De MPU6050 heeft veel registers. Elk register heeft een bepaalde functie.
     \item Het decoderen van BCD en multiplexen van de 8 displays doet de chip volledig zelf.
 \end{itemize}
 
+\subsection{Pinconfiguratie}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{max7219-pins.png}
+    \caption{Pinconfiguratie MAX7219}
+\end{figure}
+
+We gebruiken deze chip voor het aansturen van een 8x8 LED-matrix:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{matrix.png}
+    \caption{MAX7219 LED Matrix Module}
+\end{figure}
+
+Deze module heeft maar naast voeding en massa slechts 3 aansluitingen ipv de gebruikelijke 4 voor SPI:
+de MISO-pin is niet nodig want er kan toch niet geschreven naar de registers van de MAX7219.
+
+\subsection{Registers}
+De MAX7219 beschikt over 14 registers:
+
+\begin{table}[H]
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|l|l|}
+        \hline
+        \multicolumn{1}{|c|}{\textbf{Register}} & \multicolumn{1}{c|}{\textbf{Functie}}                                                                                                          \\ \hline
+        0x80                                    & \begin{tabular}[c]{@{}l@{}}No-Op(eration) register, enkel nodig wanneer \\ je meerdere modules achter elkaar hangt\end{tabular}                \\ \hline
+        0x1-0x8                                 & de data voor de 8 cijfers                                                                                                                      \\ \hline
+        0x9                                     & Decode mode: om met BCD's te kunnen werken                                                                                                     \\ \hline
+        0xA                                     & Intensity = helderheid, in 16 stappen (van 0x0 tot 0xF)                                                                                        \\ \hline
+        0xB                                     & \begin{tabular}[c]{@{}l@{}}Scan Limit: stelt in hoeveel cijfers er zijn aangesloten \\ (bij ons: 7, want de matrix heeft 8 rijen)\end{tabular} \\ \hline
+        0xC                                     & Shutdown: 1 als LSB om de uitgangen te activeren                                                                                               \\ \hline
+        0xF                                     & Display test: alle LEDs oplichten                                                                                                              \\ \hline
+    \end{tabular}%
+    }
+\end{table}
+
+\subsection{Gebruik in Python}
+
+\begin{lstlisting}[language=Python]
+from spidev import SpiDev
+spi = SpiDev()
+
+# Bus is 0, device is de gekozen CE-pin (0 of 1)
+spi.open(bus, device)                
+
+# Klokfrequentie instellen (hier: 100kHz)
+spi.max_speed_hz = ...                  
+
+# Waarde naar register schrijven
+spi.writebytes([register, value])       
+\end{lstlisting}
+
 
 
 \end{document}
