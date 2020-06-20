@@ -669,8 +669,20 @@ Na elke byte kan de slave weergeven of hij de data al dan niet goed ontvangen he
 \end{figure}
 
 \begin{itemize}
-    \item 
+    \item Er zijn 2 types van de PCF8574:
+    \begin{enumerate}
+        \item PCF8574 met vast adres 32 (0x020)
+        \item PCF8574A met vast adres 56 (0x38)
+    \end{enumerate}
 \end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{pcf-adres.png}
+    \caption{PCF8574 en PCF8574A adressen. A0, A1 en A2 kunnen we instellen door ze aan + of GND te hangen.}
+\end{figure}
+
+
 
 
 \end{document}
